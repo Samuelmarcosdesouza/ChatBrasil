@@ -216,7 +216,7 @@
            ============================================ */
         
         .sidebar {
-            width: 320px;
+            width: 220px;
             background: var(--primary-medium);
             border-right: 1px solid var(--border-color);
             display: flex;
@@ -225,38 +225,43 @@
         }
 
         .sidebar-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column; /* empilha o título e os ícones */
+    align-items: center;    /* centraliza horizontalmente */
+    justify-content: center;
+    gap: 10px;              /* espaço entre o título e os ícones */
+}
 
-        .sidebar-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-        }
+       .sidebar-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    text-align: center;     /* garante centralização do texto */
+}
 
-        .sidebar-actions {
-            display: flex;
-            gap: 8px;
-        }
 
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            background: var(--primary-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
+     .sidebar-actions {
+    display: flex;
+    justify-content: center; /* centraliza os ícones */
+    gap: 6px;
+}
+
+     .icon-btn {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
 
         .icon-btn:hover {
             background: var(--primary-light);
@@ -2022,3 +2027,4 @@
     </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cce75adb0f97d48',t:'MTc3MDkyNDE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
