@@ -938,14 +938,16 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .sidebar {
-                position: absolute;
-                left: 0;
-                height: 100%;
-                z-index: 100;
-                width: 260px;
-            }
+       @media (max-width: 480px) {
+    .sidebar {
+        position: absolute;
+        left: 0;
+        height: 100%;
+        z-index: 100;
+        width: 75%;   /* Agora fica proporcional */
+        max-width: 320px; /* Não deixa ficar gigante */
+    }
+
 
             .chat-main {
                 width: 100%;
@@ -1860,19 +1862,42 @@
             prompt.classList.add('show');
         }
 
-        function requestCameraPermission() {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(stream => {
-                        config.permissionsGranted.camera = true;
-                        stream.getTracks().forEach(track => track.stop());
-                        updatePermissionStatus();
-                    })
-                    .catch(err => {
-                        console.log('Câmera não disponível');
-                    });
-            }
-        }
+       function requestCameraPermission() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                // Exibe o vídeo na tela
+                const videoElement = document.getElementById('cameraPreview');
+                if (videoElement) {
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                }
+
+                // Marca a permissão como concedida
+                config.permissionsGranted.camera = true;
+                updatePermissionStatus();
+            })
+            .catch(err => {
+                console.error('Permissão negada ou câmera não disponível:', err);
+                alert('Não foi possível acessar a câmera. Verifique as permissões do navegador.');
+            });
+    } else {
+        alert('Seu navegador não suporta acesso à câmera.');
+    }
+}
+
+function startVideoCall() {
+    if (!config.selectedContact) {
+        alert('Selecione um contato antes de iniciar a chamada.');
+        return;
+    }
+
+    requestCameraPermission();
+    config.callActive.video = true;
+    updateCallButtons();
+    simulateCall('video');
+}
+
 
         function requestMicrophonePermission() {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -2027,4 +2052,5 @@
     </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cce75adb0f97d48',t:'MTc3MDkyNDE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
