@@ -3,7 +3,7 @@ console.log("SCRIPT CARREGADO OK");
 // ============================================
 // CONFIGURAÇÃO DO BACKEND
 // ============================================
-const API_URL = "https://chatbrasil.onrender.com";
+const API_URL = "https://api.chatbrasil.com";
 
 // ============================================
 // SOCKET.IO PARA CHAT EM TEMPO REAL
