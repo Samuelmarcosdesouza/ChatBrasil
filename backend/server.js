@@ -1,4 +1,5 @@
 require("dotenv").config();
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
@@ -15,10 +16,9 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-  connectionString: "postgresql://postgres.fcxijdkfpestqodgripr:ChatBrasil2026@://aws-1-sa-east-1.pooler.supabase.com",
+  connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
-
 
 pool.connect()
   .then(() => console.log("✅ Conectado ao PostgreSQL"))
