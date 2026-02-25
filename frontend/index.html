@@ -1279,7 +1279,7 @@
         
         function saveToStorage(key, value) {
             try {
-                localStorage.setItem(key, JSON.stringify(value));
+                (key, JSON.stringify(value));
             } catch (e) {
                 console.error('Erro ao salvar:', e);
             }
