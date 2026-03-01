@@ -1,0 +1,2139 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Brasil - Comunicação Profissional</title>
+  <style>
+        /* ============================================
+           RESET E VARIÁVEIS GLOBAIS
+           ============================================ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0f1419;
+            --primary-medium: #1a202c;
+            --primary-light: #2d3748;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --success: #10b981;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            background: var(--primary-dark);
+        }
+
+        /* ============================================
+           TELA DE AUTENTICAÇÃO
+           ============================================ */
+        
+        .auth-container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+        }
+
+        .auth-card {
+            background: var(--primary-medium);
+            padding: 48px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-header h1 {
+            font-size: 28px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            background: var(--primary-dark);
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+
+        .auth-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--danger);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            color: #86efac;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--success);
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* ============================================
+           WRAPPER DO CHAT
+           ============================================ */
+        
+        .chat-wrapper {
+            display: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .chat-wrapper.active {
+            display: flex;
+        }
+
+        /* ============================================
+           SIDEBAR
+           ============================================ */
+        
+       .sidebar {
+    width: 320px;
+    background: var(--primary-medium);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+/* Estado fechado (mobile) */
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+/* Estado aberto */
+.sidebar.open {
+    transform: translateX(0);
+}
+
+        .sidebar-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .sidebar-search {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .contacts-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .contact-item {
+            padding: 12px;
+            margin-bottom: 4px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-item:hover {
+            background: var(--primary-dark);
+            border-color: var(--border-color);
+        }
+
+        .contact-item.active {
+            background: var(--primary-dark);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .contact-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #60a5fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-status {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .online-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+            flex-shrink: 0;
+            box-shadow: 0 0 0 2px var(--primary-medium);
+        }
+
+        /* ============================================
+           CHAT MAIN
+           ============================================ */
+        
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--primary-dark);
+        }
+
+        .chat-header {
+            padding: 16px 20px;
+            background: var(--primary-medium);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .chat-header-status {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .call-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .call-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .call-btn.active {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        /* ============================================
+           MESSAGES
+           ============================================ */
+        
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .empty-chat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+        }
+
+        .empty-chat-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .empty-chat-text {
+            font-size: 14px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 60%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.received .message-content {
+            background: var(--primary-medium);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .message.sent .message-content {
+            background: var(--accent);
+            color: white;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+
+        /* ============================================
+           INPUT AREA
+           ============================================ */
+        
+        .input-area {
+            padding: 16px 20px;
+            background: var(--primary-medium);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .typing-indicator {
+            font-size: 12px;
+            color: var(--text-secondary);
+            min-height: 18px;
+            font-style: italic;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            max-height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ============================================
+           MODAIS
+           ============================================ */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--primary-medium);
+            border-radius: 12px;
+            padding: 28px;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-body {
+            margin-bottom: 24px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .modal-btn-secondary {
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--primary-light);
+            border-color: var(--accent);
+        }
+
+        .modal-btn-danger {
+            background: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .modal-btn-danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* ============================================
+           EMOJI PICKER
+           ============================================ */
+        
+        .emoji-picker {
+            background: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            max-width: 280px;
+        }
+
+        .emoji-item {
+            width: 100%;
+            padding: 8px;
+            background: var(--primary-medium);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .emoji-item:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        /* ============================================
+           FILE MENU
+           ============================================ */
+        
+        .file-menu {
+            background: var(--primary-medium);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .file-option {
+            padding: 12px 14px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .file-option:last-child {
+            border-bottom: none;
+        }
+
+        .file-option:hover {
+            background: var(--primary-light);
+            padding-left: 18px;
+        }
+
+        /* ============================================
+           PERMISSION PROMPT
+           ============================================ */
+        
+        .permission-prompt {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .permission-prompt.show {
+            display: block;
+        }
+
+        .permission-prompt-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+            margin-bottom: 6px;
+        }
+
+        .permission-prompt-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .permission-prompt-buttons {
+            display: none;
+        }
+
+        /* ============================================
+           CALL SCREEN
+           ============================================ */
+        
+        .call-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-dark);
+            z-index: 2000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .call-screen.active {
+            display: flex;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .call-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .call-info-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .call-info-duration {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .call-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .call-control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: var(--success);
+            color: white;
+        }
+
+        .call-control-btn.end-call {
+            background: var(--danger);
+            width: 56px;
+            height: 56px;
+        }
+
+        .call-control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .call-control-btn.end-call:hover {
+            background: var(--danger-hover);
+        }
+
+        /* ============================================
+           SCROLLBAR
+           ============================================ */
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* ============================================
+           RESPONSIVIDADE
+           ============================================ */
+@media (max-width: 768px) {
+    /* ============================================
+   SIDEBAR CONTROLE GLOBAL
+   ============================================ */
+
+.sidebar {
+    width: 280px;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); /* começa fechada */
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+    .message-content {
+        max-width: 85%;
+    }
+
+    .auth-card {
+        margin: 20px;
+    }
+}
+@media (max-width: 480px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 260px;
+        z-index: 1000;
+    }
+
+    .chat-main {
+        width: 100%;
+    }
+
+    .message-content {
+        max-width: 90%;
+    }
+
+    .auth-card {
+        margin: 20px;
+        padding: 32px 20px;
+    }
+}
+
+    </style>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container"><!-- TELA DE AUTENTICAÇÃO -->
+   <div class="auth-container" id="authContainer">
+    <div class="auth-card">
+     <div class="auth-header">
+      <h1>Chat Brasil</h1>
+     </div>
+     <div class="error-message" id="authError"></div>
+     <div class="success-message" id="authSuccess"></div>
+     <div class="auth-tabs"><button class="auth-tab active" data-mode="login">Entrar</button> <button class="auth-tab" data-mode="register">Cadastrar</button>
+     </div><!-- FORMULÁRIO DE LOGIN -->
+     <form id="loginForm" style="display: block;">
+      <div class="form-group"><label for="loginUsername">Usuário</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
+      </div>
+      <div class="form-group"><label for="loginPassword">Senha</label> <input type="password" id="loginPassword" placeholder="••••••••" required>
+      </div><button type="submit" class="auth-button">Entrar</button>
+     </form><!-- FORMULÁRIO DE REGISTRO -->
+     <form id="registerForm" style="display: none;">
+      <div class="form-group"><label for="registerUsername">Usuário</label> <input type="text" id="registerUsername" placeholder="seu_usuario" required>
+      </div>
+      <div class="form-group"><label for="registerEmail">Gmail</label> <input type="email" id="registerEmail" placeholder="seu_@gmail.com" required>
+      </div>
+      <div class="form-group"><label for="registerPassword">Senha</label> <input type="password" id="registerPassword" placeholder="••••••••" required>
+      </div>
+      <div class="form-group"><label for="registerPasswordConfirm">Confirmar Senha</label> <input type="password" id="registerPasswordConfirm" placeholder="••••••••" required>
+      </div><button type="submit" class="auth-button">Cadastrar</button>
+     </form>
+    </div>
+   </div><!-- CHAT WRAPPER -->
+   <div class="chat-wrapper" id="chatWrapper"><!-- SIDEBAR -->
+    <div class="sidebar">
+     <div class="sidebar-header">
+      <!-- BOTÃO 3 BARRINHAS (SÓ APARECE NO CELULAR) -->
+    <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
+      <div class="sidebar-title">
+       Conversas
+      </div>
+      <div class="sidebar-actions"><button class="icon-btn" id="addContactBtn" title="Adicionar contato">
+        <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" />
+        </svg></button> <button class="icon-btn" id="groupBtn" title="Criar grupo">
+        <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg></button> <button class="icon-btn" id="settingsBtn" title="Configurações">
+        <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
+        </svg></button>
+      </div>
+     </div>
+     <div class="sidebar-search"><input type="text" class="search-input" id="searchInput" placeholder="Procurar...">
+     </div>
+     <div class="contacts-list" id="contactsList"></div>
+   </div><!-- CHAT MAIN -->
+<div class="chat-main">
+  <div class="chat-header">
+    <div class="chat-header-info">
+
+      <div class="chat-header-title" id="chatTitle">
+        Selecione uma conversa
+      </div>
+
+      <div class="chat-header-status" id="chatStatus"></div>
+
+    </div>
+
+    <div class="chat-actions">
+      <button class="call-btn" id="callBtn" title="Chamada de Voz">
+        <svg width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
+          19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67
+          A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72
+          12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11
+          L8.09 9.91a16 16 0 0 0 6 6
+          l1.27-1.27a2 2 0 0 1 2.11-.45
+          12.84 12.84 0 0 0 2.81.7
+          A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </button>
+
+      <button class="call-btn" id="videoBtn" title="Chamada de Vídeo">
+        <svg width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="23 7 16 12 23 17 23 7"/>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="messages-container" id="messagesContainer">
+    <div class="empty-chat">
+      <div class="empty-chat-icon"></div>
+      <div class="empty-chat-text">
+        Selecione uma conversa para começar
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-wrapper">
+      <div class="typing-indicator" id="typingIndicator"></div>
+
+      <div class="permission-prompt" id="permissionPrompt">
+        <div class="permission-prompt-title">
+          Permissões: Permitido
+        </div>
+        <div class="permission-prompt-text">
+          Câmera e microfone foram ativados com sucesso.
+        </div>
+      </div>
+
+      <textarea class="message-input"
+        id="messageInput"
+        placeholder="Digite uma mensagem..."
+        rows="1"></textarea>
+    </div>
+
+    <div class="input-controls">
+      <button class="control-btn" id="emojiBtn" title="Emojis">
+        <svg width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
+        </svg>
+      </button>
+
+      <button class="control-btn" id="filesBtn" title="Arquivos">
+        <svg width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+          <polyline points="13 2 13 9 20 9"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+  </div><!-- MODAIS --> <!-- Modal Adicionar Contato -->
+  <div class="modal" id="addContactModal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /><path d="M16 11h6" />
+     </svg> Adicionar Contato
+    </div>
+    <div class="modal-body">
+     <div class="form-group"><label for="newContactUsername">Nome de Usuário</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuário" class="search-input">
+     </div>
+    </div>
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('addContactModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="addContactConfirmBtn">Adicionar</button>
+    </div>
+   </div>
+  </div><!-- Modal Criar Grupo -->
+  <div class="modal" id="createGroupModal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+     </svg> Criar Grupo
+    </div>
+    <div class="modal-body">
+     <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input">
+     </div>
+     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input">
+     </div>
+     <div class="form-group"><label>Adicionar Imagem</label> <input type="file" id="groupImageInput" accept="image/*"> <button type="button" class="modal-btn modal-btn-secondary" style="width: 100%; margin-top: 8px;" onclick="document.getElementById('groupImageInput').click()">
+       <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
+       </svg> Selecionar Imagem </button>
+     </div>
+    </div>
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('createGroupModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="createGroupConfirmBtn">Criar Grupo</button>
+    </div>
+   </div>
+  </div><!-- Modal Configurações -->
+  <div class="modal" id="settingsModal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
+     </svg> Configurações
+    </div>
+    <div class="modal-body">
+     <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 12px;">
+      <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+       </svg> Usuário
+      </div>
+      <div style="font-size: 14px; color: var(--text-primary);" id="currentUserDisplay">
+       -
+      </div>
+     </div>
+     <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 12px;">
+      <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+       </svg> Email
+      </div>
+      <div style="font-size: 14px; color: var(--text-primary);" id="currentEmailDisplay">
+       -
+      </div>
+     </div>
+     <div style="padding: 12px; background: var(--primary-dark); border-radius: 6px; border: 1px solid var(--border-color);">
+      <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+       </svg> Permissões
+      </div>
+      <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+       <div style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" />
+        </svg> Microfone: <span id="micStatus">Não solicitado</span>
+       </div>
+       <div style="display: flex; align-items: center; gap: 6px;">
+        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+        </svg> Câmera: <span id="cameraStatus">Não solicitado</span>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('settingsModal')">Fechar</button> <button class="modal-btn modal-btn-danger" id="logoutBtn">
+      <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
+      </svg> Sair </button> <button class="modal-btn modal-btn-danger" id="deleteAccountBtn">
+      <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" />
+      </svg> Excluir Conta </button>
+    </div>
+   </div>
+  </div><!-- Modal Confirmar Exclusão -->
+  <div class="modal" id="confirmDeleteModal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3.05h16.94a2 2 0 0 0 1.71-3.05L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+     </svg> Excluir Conta
+    </div>
+    <div class="modal-body">
+     <p style="color: var(--text-primary); font-size: 14px; line-height: 1.6;">Tem certeza? Esta ação é irreversível e todos os dados serão deletados permanentemente.</p>
+    </div>
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('confirmDeleteModal')">Cancelar</button> <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">
+      <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" />
+      </svg> Excluir Permanentemente </button>
+    </div>
+   </div>
+  </div><!-- Popup Emoji -->
+  <div id="emojiPickerPopup" style="display: none; position: absolute; bottom: 80px; right: 20px; z-index: 100;">
+   <div class="emoji-picker" id="emojiPicker"></div>
+  </div><!-- Popup Menu Arquivos -->
+  <div id="filesMenuPopup" style="display: none; position: absolute; bottom: 80px; right: 100px; z-index: 100;">
+   <div class="file-menu">
+    <div class="file-option" data-type="document">
+     <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="12" y1="13" x2="12" y2="17" /><line x1="9" y1="15" x2="15" y2="15" />
+     </svg> Documento
+    </div>
+    <div class="file-option" data-type="photo">
+     <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
+     </svg> Foto
+    </div>
+    <div class="file-option" data-type="video">
+     <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+     </svg> Vídeo
+    </div>
+   </div>
+  </div><!-- Tela de Chamada -->
+  <div class="call-screen" id="callScreen">
+   <div class="video-container" id="videoContainer">
+    <div class="call-info">
+     <div class="call-info-name" id="callInfoName">
+      -
+     </div>
+     <div class="call-info-duration" id="callDuration">
+      00:00
+     </div>
+    </div>
+    <div class="call-controls"><button class="call-control-btn end-call" id="endCallBtn" title="Encerrar chamada">
+      <svg width="22" height="22" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+      </svg></button>
+    </div>
+   </div>
+  </div><!-- Inputs de Arquivo --> <input type="file" id="fileInputDocument" accept=".pdf,.doc,.docx,.txt,.xlsx"> <input type="file" id="fileInputPhoto" accept="image/*"> <input type="file" id="fileInputVideo" accept="video/*">
+  <script>
+        /* ============================================
+           CONFIGURAÇÃO GLOBAL
+           ============================================ */
+        
+        const config = {
+            currentUser: null,
+            currentUserEmail: null,
+            selectedContact: null,
+            contacts: [],
+            messages: {},
+            groups: [],
+            permissionsGranted: {
+                camera: false,
+                microphone: false
+            },
+            callActive: {
+                audio: false,
+                video: false
+            }
+        };
+
+        /* ============================================
+           STORAGE
+           ============================================ */
+        
+        function saveToStorage(key, value) {
+            try {
+                (key, JSON.stringify(value));
+            } catch (e) {
+                console.error('Erro ao salvar:', e);
+            }
+        }
+
+        function getFromStorage(key, defaultValue = null) {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : defaultValue;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+
+   function init() {
+    loadAllData();
+    setupAuthListeners();
+    setupChatListeners();
+    checkIfLoggedIn();
+    requestPermissions();
+
+    /* ============================================
+       MENU SIDEBAR (BOTÃO 3 BARRINHAS)
+       ============================================ */
+
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (menuBtn && sidebar) {
+        sidebar.classList.remove('open');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    }
+
+    /* ============================================
+       EXCLUIR CONVERSA (LONG PRESS + BOTÃO DIREITO)
+       ============================================ */
+
+    const contactsList = document.getElementById('contactsList');
+
+    if (contactsList) {
+
+        let pressTimer;
+
+        // Segurar (touch ou mouse)
+        contactsList.addEventListener('pointerdown', (e) => {
+            const contactItem = e.target.closest('.contact-item');
+            if (!contactItem) return;
+
+            pressTimer = setTimeout(() => {
+                if (confirm("Deseja excluir esta conversa?")) {
+                    contactItem.remove();
+                }
+            }, 800);
+        });
+
+        contactsList.addEventListener('pointerup', () => {
+            clearTimeout(pressTimer);
+        });
+
+        contactsList.addEventListener('pointerleave', () => {
+            clearTimeout(pressTimer);
+        });
+
+        // Clique direito no PC
+        contactsList.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+
+            const contactItem = e.target.closest('.contact-item');
+            if (!contactItem) return;
+
+            if (confirm("Deseja excluir esta conversa?")) {
+                contactItem.remove();
+            }
+        });
+    }
+}
+
+        function loadAllData() {
+            const allUsers = getFromStorage('chatbrasil_users', {});
+            const currentUser = getFromStorage('chatbrasil_currentUser', null);
+            
+            if (currentUser && allUsers[currentUser]) {
+                config.currentUser = currentUser;
+                config.currentUserEmail = allUsers[currentUser].email;
+                config.contacts = allUsers[currentUser].contacts || [];
+                config.messages = allUsers[currentUser].messages || {};
+                config.groups = allUsers[currentUser].groups || [];
+            }
+        }
+
+        function checkIfLoggedIn() {
+            if (config.currentUser) {
+                showChatScreen();
+                renderContacts();
+            } else {
+                showAuthScreen();
+            }
+        }
+
+        /* ============================================
+           AUTENTICAÇÃO
+           ============================================ */
+        
+        function setupAuthListeners() {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const mode = tab.dataset.mode;
+                    loginForm.style.display = mode === 'login' ? 'block' : 'none';
+                    registerForm.style.display = mode === 'register' ? 'block' : 'none';
+                    
+                    clearErrors();
+                });
+            });
+
+            loginForm.addEventListener('submit', handleLogin);
+            registerForm.addEventListener('submit', handleRegister);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showError('Preencha todos os campos');
+                return;
+            }
+
+            const allUsers = getFromStorage('chatbrasil_users', {});
+            const user = allUsers[username];
+
+            if (!user || user.password !== password) {
+                showError('Usuário ou senha incorretos');
+                return;
+            }
+
+            config.currentUser = username;
+            config.currentUserEmail = user.email;
+            config.contacts = user.contacts || [];
+            config.messages = user.messages || {};
+            config.groups = user.groups || [];
+
+            saveToStorage('chatbrasil_currentUser', username);
+            showSuccess('Bem-vindo de volta!');
+            
+            setTimeout(() => {
+                showChatScreen();
+                renderContacts();
+            }, 500);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
+
+            if (!username || !email || !password || !passwordConfirm) {
+                showError('Preencha todos os campos');
+                return;
+            }
+
+            if (username.length < 10) {
+                showError('Usuário deve ter pelo menos 10 caracteres');
+                return;
+            }
+
+            if (!email.includes('@gmail.com')) {
+                showError('Use um Gmail válido');
+                return;
+            }
+
+            if (password.length < 10) {
+                showError('Senha deve ter pelo menos 10 caracteres');
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                showError('As senhas não conferem');
+                return;
+            }
+
+            const allUsers = getFromStorage('chatbrasil_users', {});
+
+            if (allUsers[username]) {
+                showError('Este usuário já existe');
+                return;
+            }
+
+            allUsers[username] = {
+                email: email,
+                password: password,
+                contacts: [],
+                messages: {},
+                groups: []
+            };
+
+            saveToStorage('chatbrasil_users', allUsers);
+            saveToStorage('chatbrasil_currentUser', username);
+
+            config.currentUser = username;
+            config.currentUserEmail = email;
+            config.contacts = [];
+            config.messages = {};
+            config.groups = [];
+
+            showSuccess('Conta criada com sucesso!');
+
+            setTimeout(() => {
+                showChatScreen();
+                renderContacts();
+                clearAuthForms();
+            }, 500);
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('authError');
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('authSuccess');
+            successEl.textContent = message;
+            successEl.classList.add('show');
+            setTimeout(() => successEl.classList.remove('show'), 3000);
+        }
+
+        function clearErrors() {
+            document.getElementById('authError').classList.remove('show');
+            document.getElementById('authSuccess').classList.remove('show');
+        }
+
+        function clearAuthForms() {
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+        }
+
+        function showAuthScreen() {
+            document.getElementById('authContainer').style.display = 'flex';
+            document.getElementById('chatWrapper').classList.remove('active');
+        }
+
+        function showChatScreen() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('chatWrapper').classList.add('active');
+        }
+
+        /* ============================================
+           CHAT
+           ============================================ */
+        
+        function setupChatListeners() {
+            document.getElementById('addContactBtn').addEventListener('click', () => openModal('addContactModal'));
+            document.getElementById('groupBtn').addEventListener('click', () => openModal('createGroupModal'));
+            document.getElementById('settingsBtn').addEventListener('click', () => {
+                updateSettingsModal();
+                openModal('settingsModal');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+                closeModal('settingsModal');
+                openModal('confirmDeleteModal');
+            });
+            document.getElementById('confirmDeleteBtn').addEventListener('click', deleteAccount);
+
+            document.getElementById('addContactConfirmBtn').addEventListener('click', addContact);
+            document.getElementById('createGroupConfirmBtn').addEventListener('click', createGroup);
+
+            const messageInput = document.getElementById('messageInput');
+            messageInput.addEventListener('input', autoResize);
+            messageInput.addEventListener('keydown', handleMessageKeydown);
+
+            document.getElementById('emojiBtn').addEventListener('click', toggleEmojiPicker);
+            document.getElementById('filesBtn').addEventListener('click', toggleFilesMenu);
+
+            document.getElementById('callBtn').addEventListener('click', startCall);
+            document.getElementById('videoBtn').addEventListener('click', startVideoCall);
+
+            document.getElementById('searchInput').addEventListener('input', filterContacts);
+
+            document.getElementById('fileInputDocument').addEventListener('change', (e) => handleFileUpload(e, 'document'));
+            document.getElementById('fileInputPhoto').addEventListener('change', (e) => handleFileUpload(e, 'photo'));
+            document.getElementById('fileInputVideo').addEventListener('change', (e) => handleFileUpload(e, 'video'));
+
+            document.getElementById('endCallBtn').addEventListener('click', endCall);
+        }
+
+        function renderContacts() {
+            const list = document.getElementById('contactsList');
+            list.innerHTML = '';
+
+            config.contacts.forEach(contact => {
+                const item = document.createElement('div');
+                item.className = 'contact-item' + (config.selectedContact === contact.id ? ' active' : '');
+                item.innerHTML = `
+                    <div class="contact-avatar">${contact.name.charAt(0).toUpperCase()}</div>
+                    <div class="contact-info">
+                        <div class="contact-name">${contact.name}</div>
+                        <div class="contact-status">Online</div>
+                    </div>
+                    <div class="online-indicator"></div>
+                `;
+                item.addEventListener('click', () => selectContact(contact.id, contact.name));
+                list.appendChild(item);
+            });
+
+            config.groups.forEach(group => {
+                const item = document.createElement('div');
+                item.className = 'contact-item' + (config.selectedContact === group.id ? ' active' : '');
+                item.innerHTML = `
+                    <div class="contact-avatar" style="background: linear-gradient(135deg, #3b82f6, #60a5fa);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-name">${group.name}</div>
+                        <div class="contact-status">${group.members.length} membros</div>
+                    </div>
+                    <div class="online-indicator"></div>
+                `;
+                item.addEventListener('click', () => selectContact(group.id, group.name, true));
+                list.appendChild(item);
+            });
+
+            if (config.contacts.length === 0 && config.groups.length === 0) {
+                list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary); font-size: 13px;">Nenhuma conversa. Adicione um contato para começar!</div>';
+            }
+        }
+
+        function selectContact(contactId, contactName, isGroup = false) {
+            config.selectedContact = contactId;
+            config.isGroupChat = isGroup;
+            
+            document.getElementById('chatTitle').textContent = contactName;
+            document.getElementById('chatStatus').textContent = isGroup ? 'Grupo' : 'Online';
+            document.getElementById('chatAvatar').textContent = contactName.charAt(0).toUpperCase();
+
+            renderMessages();
+            renderContacts();
+        }
+
+        function addContact() {
+            const username = document.getElementById('newContactUsername').value.trim();
+
+            if (!username) {
+                alert('Digite o nome de usuário');
+                return;
+            }
+
+            const allUsers = getFromStorage('chatbrasil_users', {});
+            if (!allUsers[username]) {
+                alert('Usuário não encontrado');
+                return;
+            }
+
+            if (username === config.currentUser) {
+                alert('Você não pode adicionar a si mesmo');
+                return;
+            }
+
+            if (config.contacts.some(c => c.id === username)) {
+                alert('Este contato já existe');
+                return;
+            }
+
+            const contact = {
+                id: username,
+                name: username
+            };
+
+            config.contacts.push(contact);
+            saveUserData();
+            renderContacts();
+
+            document.getElementById('newContactUsername').value = '';
+            closeModal('addContactModal');
+            alert('Contato adicionado com sucesso!');
+        }
+
+        function createGroup() {
+            const groupName = document.getElementById('groupName').value.trim();
+            const description = document.getElementById('groupDescription').value.trim();
+            const imageInput = document.getElementById('groupImageInput');
+
+            if (!groupName) {
+                alert('Digite o nome do grupo');
+                return;
+            }
+
+            const group = {
+                id: 'group_' + Date.now(),
+                name: groupName,
+                description: description,
+                image: imageInput.files.length > 0 ? URL.createObjectURL(imageInput.files[0]) : null,
+                members: [config.currentUser],
+                createdAt: new Date().toISOString()
+            };
+
+            config.groups.push(group);
+            config.messages[group.id] = [];
+            saveUserData();
+            renderContacts();
+
+            document.getElementById('groupName').value = '';
+            document.getElementById('groupDescription').value = '';
+            imageInput.value = '';
+            closeModal('createGroupModal');
+            alert('Grupo criado com sucesso!');
+        }
+
+        function filterContacts(e) {
+            const search = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.contact-item');
+
+            items.forEach(item => {
+                const name = item.querySelector('.contact-name').textContent.toLowerCase();
+                item.style.display = name.includes(search) ? 'flex' : 'none';
+            });
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('messagesContainer');
+
+            if (!config.selectedContact) {
+                container.innerHTML = `
+                    <div class="empty-chat">
+                        <div class="empty-chat-icon">💬</div>
+                        <div class="empty-chat-text">Selecione uma conversa para começar</div>
+                    </div>
+                `;
+                return;
+            }
+
+            const messages = config.messages[config.selectedContact] || [];
+
+            if (messages.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-chat">
+                        <div class="empty-chat-icon">💬</div>
+                        <div class="empty-chat-text">Nenhuma mensagem ainda</div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            messages.forEach(msg => {
+                const msgEl = document.createElement('div');
+                msgEl.className = 'message ' + (msg.sender === config.currentUser ? 'sent' : 'received');
+                
+                let content = msg.text;
+                if (msg.type === 'file') {
+                    content = `Documento: ${msg.fileName}`;
+                } else if (msg.type === 'photo') {
+                    content = `Foto enviada`;
+                } else if (msg.type === 'video') {
+                    content = `Vídeo enviado`;
+                }
+
+                msgEl.innerHTML = `
+                    <div class="message-content">${escapeHtml(content)}</div>
+                    <div class="message-time">${formatTime(msg.timestamp)}</div>
+                `;
+                container.appendChild(msgEl);
+            });
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleMessageKeydown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+
+            if (!text || !config.selectedContact) return;
+
+            if (!config.messages[config.selectedContact]) {
+                config.messages[config.selectedContact] = [];
+            }
+
+            const message = {
+                id: 'msg_' + Date.now(),
+                sender: config.currentUser,
+                text: text,
+                type: 'text',
+                timestamp: new Date().toISOString()
+            };
+
+            config.messages[config.selectedContact].push(message);
+            saveUserData();
+            renderMessages();
+
+            input.value = '';
+            input.style.height = 'auto';
+        }
+
+        function autoResize(e) {
+            e.target.style.height = 'auto';
+            e.target.style.height = Math.min(e.target.scrollHeight, 100) + 'px';
+        }
+
+        /* ============================================
+           EMOJIS E ARQUIVOS
+           ============================================ */
+        
+        function initializeEmojiPicker() {
+            const emojis = ['😀', '😂', '❤️', '👍', '🎉', '🔥', '✨', '😍', '😢', '😡', '👌', '💯', '🙏', '😎', '🤔', '😴', '👋', '🎂', '🍕', '☕', '🎮', '🎵', '📱', '💻', '✈️', '🌟', '⭐', '🌈', '🦄', '🎨'];
+            const picker = document.getElementById('emojiPicker');
+            
+            emojis.forEach(emoji => {
+                const item = document.createElement('div');
+                item.className = 'emoji-item';
+                item.textContent = emoji;
+                item.addEventListener('click', () => addEmojiToMessage(emoji));
+                picker.appendChild(item);
+            });
+        }
+
+        function toggleEmojiPicker() {
+            const popup = document.getElementById('emojiPickerPopup');
+            const isVisible = popup.style.display === 'block';
+            
+            closeMenus();
+            popup.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible && popup.querySelector('.emoji-picker').children.length === 0) {
+                initializeEmojiPicker();
+            }
+        }
+
+        function addEmojiToMessage(emoji) {
+            const input = document.getElementById('messageInput');
+            input.value += emoji;
+            input.focus();
+            closeMenus();
+        }
+
+        function toggleFilesMenu() {
+            const popup = document.getElementById('filesMenuPopup');
+            const isVisible = popup.style.display === 'block';
+            
+            closeMenus();
+            popup.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function setupFileMenuListener() {
+            const options = document.querySelectorAll('.file-option');
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const type = option.dataset.type;
+                    if (type === 'document') {
+                        document.getElementById('fileInputDocument').click();
+                    } else if (type === 'photo') {
+                        document.getElementById('fileInputPhoto').click();
+                    } else if (type === 'video') {
+                        document.getElementById('fileInputVideo').click();
+                    }
+                    closeMenus();
+                });
+            });
+        }
+
+        function handleFileUpload(e, type) {
+            const file = e.target.files[0];
+            if (!file || !config.selectedContact) return;
+
+            const message = {
+                id: 'msg_' + Date.now(),
+                sender: config.currentUser,
+                text: file.name,
+                fileName: file.name,
+                type: type,
+                timestamp: new Date().toISOString()
+            };
+
+            if (!config.messages[config.selectedContact]) {
+                config.messages[config.selectedContact] = [];
+            }
+
+            config.messages[config.selectedContact].push(message);
+            saveUserData();
+            renderMessages();
+        }
+
+        /* ============================================
+           CHAMADAS
+           ============================================ */
+        
+        function startCall() {
+            if (!config.selectedContact) {
+                alert('Selecione um contato');
+                return;
+            }
+            
+            requestMicrophonePermission();
+            config.callActive.audio = true;
+            updateCallButtons();
+            simulateCall('audio');
+        }
+
+        function startVideoCall() {
+            if (!config.selectedContact) {
+                alert('Selecione um contato');
+                return;
+            }
+            
+            requestCameraPermission();
+            config.callActive.video = true;
+            updateCallButtons();
+            simulateCall('video');
+        }
+
+        function updateCallButtons() {
+            const callBtn = document.getElementById('callBtn');
+            const videoBtn = document.getElementById('videoBtn');
+            
+            if (config.callActive.audio || config.callActive.video) {
+                callBtn.classList.add('active');
+                videoBtn.classList.add('active');
+            } else {
+                callBtn.classList.remove('active');
+                videoBtn.classList.remove('active');
+            }
+        }
+
+        function simulateCall(type) {
+            document.getElementById('callScreen').classList.add('active');
+            document.getElementById('callInfoName').textContent = document.getElementById('chatTitle').textContent;
+
+            let duration = 0;
+            const startTime = Date.now();
+
+            const durationInterval = setInterval(() => {
+                duration = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(duration / 60);
+                const seconds = duration % 60;
+                document.getElementById('callDuration').textContent = 
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }, 1000);
+
+            window.currentCallInterval = durationInterval;
+        }
+
+        function endCall() {
+            document.getElementById('callScreen').classList.remove('active');
+            config.callActive.audio = false;
+            config.callActive.video = false;
+            updateCallButtons();
+            
+            if (window.currentCallInterval) {
+                clearInterval(window.currentCallInterval);
+            }
+        }
+
+        /* ============================================
+           PERMISSÕES
+           ============================================ */
+        
+        function requestPermissions() {
+            const prompt = document.getElementById('permissionPrompt');
+            prompt.classList.add('show');
+        }
+
+        function requestCameraPermission() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        config.permissionsGranted.camera = true;
+                        stream.getTracks().forEach(track => track.stop());
+                        updatePermissionStatus();
+                    })
+                    .catch(err => {
+                        console.log('Câmera não disponível');
+                    });
+            }
+        }
+
+        function requestMicrophonePermission() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        config.permissionsGranted.microphone = true;
+                        stream.getTracks().forEach(track => track.stop());
+                        updatePermissionStatus();
+                    })
+                    .catch(err => {
+                        console.log('Microfone não disponível');
+                    });
+            }
+        }
+
+        function updatePermissionStatus() {
+            document.getElementById('micStatus').textContent = 
+                config.permissionsGranted.microphone ? 'Permitido' : 'Negado';
+            document.getElementById('cameraStatus').textContent = 
+                config.permissionsGranted.camera ? 'Permitido' : 'Negado';
+        }
+
+        /* ============================================
+           CONFIGURAÇÕES
+           ============================================ */
+        
+        function updateSettingsModal() {
+            document.getElementById('currentUserDisplay').textContent = config.currentUser;
+            document.getElementById('currentEmailDisplay').textContent = config.currentUserEmail;
+            updatePermissionStatus();
+        }
+
+        function logout() {
+            closeModal('settingsModal');
+            saveUserData();
+            localStorage.removeItem('chatbrasil_currentUser');
+            config.currentUser = null;
+            config.selectedContact = null;
+            config.contacts = [];
+            config.messages = {};
+            config.groups = [];
+            
+            clearAuthForms();
+            showAuthScreen();
+        }
+
+         function deleteAccount() {
+    const currentUsername = config.currentUser;
+    
+    // Pega todos os usuários do localStorage
+    const allUsers = JSON.parse(localStorage.getItem('chatbrasil_users') || '{}');
+    
+    // Deleta o usuário atual
+    if (allUsers[currentUsername]) {
+        delete allUsers[currentUsername];
+        localStorage.setItem('chatbrasil_users', JSON.stringify(allUsers));
+    }
+    
+    // Limpa todos os dados do usuário
+    localStorage.removeItem('chatbrasil_currentUser');
+    localStorage.removeItem('chatbrasil_contacts_' + currentUsername);
+    localStorage.removeItem('chatbrasil_messages_' + currentUsername);
+    localStorage.removeItem('chatbrasil_groups_' + currentUsername);
+    
+    // Fecha o modal
+    closeModal('confirmDeleteModal');
+    
+    // Reseta a configuração
+    config.currentUser = null;
+    config.currentUserEmail = null;
+    config.selectedContact = null;
+    config.contacts = [];
+    config.messages = {};
+    config.groups = [];
+    
+    // Limpa formulários
+    clearAuthForms();
+    
+    // Mostra mensagem
+    showSuccess('Conta deletada com sucesso!');
+    
+    // Volta para login após 1 segundo
+    setTimeout(() => {
+        showAuthScreen();
+    }, 1000);
+}
+        /* ============================================
+           MODAIS
+           ============================================ */
+        
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function closeMenus() {
+            document.getElementById('emojiPickerPopup').style.display = 'none';
+            document.getElementById('filesMenuPopup').style.display = 'none';
+        }
+
+        /* ============================================
+           UTILITÁRIOS
+           ============================================ */
+        
+        function saveUserData() {
+            const allUsers = getFromStorage('chatbrasil_users', {});
+            allUsers[config.currentUser] = {
+                email: config.currentUserEmail,
+                password: allUsers[config.currentUser].password,
+                contacts: config.contacts,
+                messages: config.messages,
+                groups: config.groups
+            };
+            saveToStorage('chatbrasil_users', allUsers);
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+             /* ============================================
+           INICIALIZAÇÃO
+           ============================================ */
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+            setupFileMenuListener();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.control-btn') && 
+                !e.target.closest('#emojiPickerPopup') &&
+                !e.target.closest('#filesMenuPopup')) {
+                closeMenus();
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (config.currentUser) {
+                saveUserData();
+            }
+        });
+    </script>
+
+    <!-- SEU SCRIPT EXTERNO -->
+    <script src="script.js"></script>
+
+</body>
+</html>
