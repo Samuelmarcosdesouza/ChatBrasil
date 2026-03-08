@@ -4,6 +4,7 @@ console.log("SCRIPT CARREGADO OK");
 // CONFIGURAÇÃO DO BACKEND
 // ============================================
 const API_URL = "https://chatbrasil.onrender.com";
+let contatoSelecionadoId = null; // Para guardar com quem você está falando
 
 // ============================================
 // SOCKET.IO PARA CHAT EM TEMPO REAL
@@ -43,11 +44,12 @@ if (chatSendBtn && chatInput) {
     chatSendBtn.addEventListener("click", () => {
         const message = chatInput.value.trim();
         if (message !== "") {
-            // Envia o token junto para o servidor validar
-            socket.emit("send_message", { 
-                text: message, 
-                token: localStorage.getItem("token") 
-            });
+          socket.emit("send_message", { 
+    sender_id: localStorage.getItem("userId"),
+    receiver_id: contatoSelecionadoId, // Esta variável precisa ser definida ao clicar em um nome
+    text: message, 
+    token: localStorage.getItem("token") 
+});
             chatInput.value = "";
         }
     });
@@ -94,6 +96,8 @@ async function loginUser(email, password) {
         if (res.ok) {
             localStorage.setItem("token", data.token);
             localStorage.setItem("username", data.username);
+// Adicione esta linha logo abaixo do username:
+localStorage.setItem("userId", data.userId);
             alert("Login realizado com sucesso!");
             location.reload(); // Recarrega para ativar o Socket com o novo token
         } else {
@@ -128,6 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
             registerUser(username, email, password);
         });
     }
+// ... código anterior do loginForm
+    
+    // ADICIONE ISSO AQUI:
+    if (localStorage.getItem("token")) {
+        carregarContatos(); 
+    }
 
     // LOGIN
     const loginForm = document.getElementById("loginForm");
@@ -149,3 +159,23 @@ document.addEventListener("click", (e) => {
         if (typeof closeMenus === "function") closeMenus();
     }
 });
+async function carregarContatos() {
+    const res = await fetch(`${API_URL}/users`); // Você precisa criar essa rota no server.js
+    const usuarios = await res.json();
+    const lista = document.getElementById("contatosList"); // Crie uma div com este ID no HTML
+    
+    if(lista) {
+        lista.innerHTML = "";
+        usuarios.forEach(user => {
+            const item = document.createElement("li");
+            item.textContent = user.username;
+            item.onclick = () => {
+                contatoSelecionadoId = user.id;
+                alert("Conversando com: " + user.username);
+            };
+            lista.appendChild(item);
+        });
+    }
+}
+
+// Chame essa função dentro do DOMContentLoaded

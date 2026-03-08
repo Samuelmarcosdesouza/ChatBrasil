@@ -58,26 +58,42 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Login
+// --- LOGIN CORRIGIDO ---
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     
     if (result.rows.length > 0 && await bcrypt.compare(password, result.rows[0].password)) {
+      const user = result.rows[0];
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "7d" });
       
-      // 🚀 CORREÇÃO AQUI: Gera o token e ENVIA a resposta para o frontend
-      const token = jwt.sign({ id: result.rows[0].id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-      res.json({ token, username: result.rows[0].username });
-      // --------------------------------------------------------------------------
+      // Enviando o ID para o frontend salvar no localStorage
+      res.json({ 
+        token, 
+        username: user.username, 
+        userId: user.id 
+      });
       
     } else {
       res.status(400).json({ error: "Dados inválidos." });
     }
   } catch (err) {
-    console.error("❌ Erro no /login:", err); // mostra o erro completo
+    console.error("❌ Erro no /login:", err);
     res.status(500).json({ error: "Erro no servidor." });
   }
+});
+
+// --- ROTA DE USUÁRIOS CORRIGIDA ---
+app.get('/users', async (req, res) => {
+    try {
+        // Usei "users" para combinar com o restante do seu código
+        const result = await pool.query('SELECT id, username FROM users ORDER BY username ASC'); 
+        res.json(result.rows);
+    } catch (err) {
+        console.error("❌ Erro ao buscar usuários:", err);
+        res.status(500).json({ error: "Erro ao buscar usuários" });
+    }
 });
 
 // ------------------------------
@@ -113,9 +129,11 @@ io.on("connection", socket => {
     console.log("❌ Usuário desconectou.");
   });
 });
-
 // ------------------------------
 // Inicialização do servidor
 // ------------------------------
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
+
+server.listen(PORT, () => {
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
+});
