@@ -1,11 +1,14 @@
+// --- CORREÇÃO DO SCRIPT.JS ---
 console.log("SCRIPT CARREGADO OK");
 
-const API_URL = "https://chatbrasil.onrender.com";
+// A URL da sua aplicação na Render
+const API_URL = "https://chatbrasil.onrender.com"; 
 
-// 1. Configuração do Socket (Melhorada para o Render)
+// Conecta o socket apontando para a API_URL
 const socket = io(API_URL, {
     transports: ["websocket", "polling"]
 });
+// -----------------------------
 
 const chatContainer = document.getElementById("chatMessages");
 const chatInput = document.getElementById("chatInput");
