@@ -1251,6 +1251,53 @@
     </div>
    </div>
   </div><!-- Inputs de Arquivo --> <input type="file" id="fileInputDocument" accept=".pdf,.doc,.docx,.txt,.xlsx"> <input type="file" id="fileInputPhoto" accept="image/*"> <input type="file" id="fileInputVideo" accept="video/*">
+// Configuração da API (Troque pela sua URL da Render)
+const API_URL = "https://chatbrasil.onrender.com";
+
+// FUNÇÃO PARA ADICIONAR CONTATO
+document.getElementById('addContactConfirmBtn').addEventListener('click', async () => {
+    const usernameBusca = document.getElementById('newContactUsername').value.trim();
+    
+    if (!usernameBusca) {
+        alert("Por favor, digite um nome de usuário.");
+        return;
+    }
+
+    try {
+        // Faz a busca exata no backend usando o parâmetro ?search
+        const res = await fetch(`${API_URL}/users?search=${encodeURIComponent(usernameBusca)}`);
+        const usuarios = await res.json();
+
+        // Se o servidor retornar 404 ou uma lista vazia
+        if (!res.ok || usuarios.length === 0) {
+            alert("Usuário não encontrado!");
+            return;
+        }
+
+        // Se encontrou, pegamos o primeiro (já que a busca é exata)
+        const usuarioEncontrado = usuarios[0];
+        
+        alert("Usuário " + usuarioEncontrado.username + " adicionado com sucesso!");
+        
+        // Fecha o modal e limpa o campo
+        closeModal('addContactModal');
+        document.getElementById('newContactUsername').value = "";
+
+        // Atualiza a lista de contatos na sidebar automaticamente
+        if (typeof carregarContatos === "function") {
+            carregarContatos();
+        }
+
+    } catch (err) {
+        console.error("Erro ao buscar usuário:", err);
+        alert("Erro ao conectar com o servidor.");
+    }
+});
+
+// Função para fechar os modais (caso ainda não tenha)
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
   <script>
         /* ============================================
            CONFIGURAÇÃO GLOBAL
