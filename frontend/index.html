@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="pt-BR">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Brasil - ComunicaÃ§Ã£o Profissional</title>
+  <title>Chat Brasil - Comunicação Profissional</title>
   <style>
         /* ============================================
-           RESET E VARIÃVEIS GLOBAIS
+           RESET E VARIÁVEIS GLOBAIS
            ============================================ */
         
         * {
@@ -46,7 +46,7 @@
         }
 
         /* ============================================
-           TELA DE AUTENTICAÃ‡ÃƒO
+           TELA DE AUTENTICAÇÃO
            ============================================ */
         
         .auth-container {
@@ -937,7 +937,7 @@
 .sidebar {
     width: 280px;
     transition: transform 0.3s ease;
-    transform: translateX(-100%); /* comeÃ§a fechada */
+    transform: translateX(-100%); /* começa fechada */
 }
 
 .sidebar.open {
@@ -979,11 +979,11 @@
     </style>
   <script src="/_sdk/element_sdk.js"></script>
   <style>body { box-sizing: border-box; }</style>
-  <script src="https://cdn.tailwindcss.com/3.4.17" ></script>
-  <script src="/_sdk/data_sdk.js" ></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body>
-  <div class="container"><!-- TELA DE AUTENTICAÃ‡ÃƒO -->
+  <div class="container"><!-- TELA DE AUTENTICAÇÃO -->
    <div class="auth-container" id="authContainer">
     <div class="auth-card">
      <div class="auth-header">
@@ -991,22 +991,22 @@
      </div>
      <div class="error-message" id="authError"></div>
      <div class="success-message" id="authSuccess"></div>
-     <div class="auth-tabs"><button type="button" class="auth-tab active" data-mode="login">Entrar</button> <button type="button" class="auth-tab" data-mode="register">Cadastrar</button>
-     </div><!-- FORMULÃRIO DE LOGIN -->
+     <div class="auth-tabs"><button class="auth-tab active" data-mode="login">Entrar</button> <button class="auth-tab" data-mode="register">Cadastrar</button>
+     </div><!-- FORMULÁRIO DE LOGIN -->
      <form id="loginForm" style="display: block;">
-      <div class="form-group"><label for="loginUsername">UsuÃ¡rio</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
+      <div class="form-group"><label for="loginUsername">Usuário</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
       </div>
-      <div class="form-group"><label for="loginPassword">Senha</label> <input type="password" id="loginPassword" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+      <div class="form-group"><label for="loginPassword">Senha</label> <input type="password" id="loginPassword" placeholder="••••••••" required>
       </div><button type="submit" class="auth-button">Entrar</button>
-     </form><!-- FORMULÃRIO DE REGISTRO -->
+     </form><!-- FORMULÁRIO DE REGISTRO -->
      <form id="registerForm" style="display: none;">
-      <div class="form-group"><label for="registerUsername">UsuÃ¡rio</label> <input type="text" id="registerUsername" placeholder="seu_usuario" required>
+      <div class="form-group"><label for="registerUsername">Usuário</label> <input type="text" id="registerUsername" placeholder="seu_usuario" required>
       </div>
-      <div class="form-group"><label for="registerEmail">Gmail</label> <input type="email" id="registerEmail" placeholder="seu_@gmail.com" required>
+      <div class="form-group"><label for="registerEmail">Email Gmail</label> <input type="email" id="registerEmail" placeholder="seu_email@gmail.com" required>
       </div>
-      <div class="form-group"><label for="registerPassword">Senha</label> <input type="password" id="registerPassword" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+      <div class="form-group"><label for="registerPassword">Senha</label> <input type="password" id="registerPassword" placeholder="••••••••" required>
       </div>
-      <div class="form-group"><label for="registerPasswordConfirm">Confirmar Senha</label> <input type="password" id="registerPasswordConfirm" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+      <div class="form-group"><label for="registerPasswordConfirm">Confirmar Senha</label> <input type="password" id="registerPasswordConfirm" placeholder="••••••••" required>
       </div><button type="submit" class="auth-button">Cadastrar</button>
      </form>
     </div>
@@ -1014,23 +1014,23 @@
    <div class="chat-wrapper" id="chatWrapper"><!-- SIDEBAR -->
     <div class="sidebar">
      <div class="sidebar-header">
-      <!-- BOTÃƒO 3 BARRINHAS (SÃ“ APARECE NO CELULAR) -->
-    <button type="button" class="icon-btn" id="menuBtn" title="Menu">â˜°</button>
+      <!-- BOTÃO 3 BARRINHAS (SÓ APARECE NO CELULAR) -->
+    <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
       <div class="sidebar-title">
        Conversas
       </div>
-      <div class="sidebar-actions"><button type="button" class="icon-btn" id="addContactBtn" title="Adicionar contato">
+      <div class="sidebar-actions"><button class="icon-btn" id="addContactBtn" title="Adicionar contato">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" />
-        </svg></button> <button type="button" class="icon-btn" id="groupBtn" title="Criar grupo">
+        </svg></button> <button class="icon-btn" id="groupBtn" title="Criar grupo">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg></button> <button type="button" class="icon-btn" id="settingsBtn" title="ConfiguraÃ§Ãµes">
+        </svg></button> <button class="icon-btn" id="settingsBtn" title="Configurações">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
         </svg></button>
       </div>
      </div>
      <div class="sidebar-search"><input type="text" class="search-input" id="searchInput" placeholder="Procurar...">
      </div>
-    <div class="contacts-list" id="contatosList"></div>
+     <div class="contacts-list" id="contactsList"></div>
    </div><!-- CHAT MAIN -->
 <div class="chat-main">
   <div class="chat-header">
@@ -1045,7 +1045,7 @@
     </div>
 
     <div class="chat-actions">
-      <button type="button" class="call-btn" id="callBtn" title="Chamada de Voz">
+      <button class="call-btn" id="callBtn" title="Chamada de Voz">
         <svg width="18" height="18" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
@@ -1059,7 +1059,7 @@
         </svg>
       </button>
 
-      <button type="button" class="call-btn" id="videoBtn" title="Chamada de VÃ­deo">
+      <button class="call-btn" id="videoBtn" title="Chamada de Vídeo">
         <svg width="18" height="18" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="23 7 16 12 23 17 23 7"/>
@@ -1073,7 +1073,7 @@
     <div class="empty-chat">
       <div class="empty-chat-icon"></div>
       <div class="empty-chat-text">
-        Selecione uma conversa para comeÃ§ar
+        Selecione uma conversa para começar
       </div>
     </div>
   </div>
@@ -1084,10 +1084,10 @@
 
       <div class="permission-prompt" id="permissionPrompt">
         <div class="permission-prompt-title">
-          PermissÃµes: Permitido
+          Permissões: Permitido
         </div>
         <div class="permission-prompt-text">
-          CÃ¢mera e microfone foram ativados com sucesso.
+          Câmera e microfone foram ativados com sucesso.
         </div>
       </div>
 
@@ -1098,7 +1098,7 @@
     </div>
 
     <div class="input-controls">
-      <button type="button" class="control-btn" id="emojiBtn" title="Emojis">
+      <button class="control-btn" id="emojiBtn" title="Emojis">
         <svg width="18" height="18" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
@@ -1106,7 +1106,7 @@
         </svg>
       </button>
 
-      <button type="button" class="control-btn" id="filesBtn" title="Arquivos">
+      <button class="control-btn" id="filesBtn" title="Arquivos">
         <svg width="18" height="18" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2">
           <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
@@ -1124,10 +1124,10 @@
      </svg> Adicionar Contato
     </div>
     <div class="modal-body">
-     <div class="form-group"><label for="newContactUsername">Nome de UsuÃ¡rio</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuÃ¡rio" class="search-input">
+     <div class="form-group"><label for="newContactUsername">Nome de Usuário</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuário" class="search-input">
      </div>
     </div>
-    <div class="modal-footer"><button type="button" class="modal-btn modal-btn-secondary" onclick="closeModal('addContactModal')">Cancelar</button> <button type="button" class="modal-btn modal-btn-primary" id="addContactConfirmBtn">Adicionar</button>
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('addContactModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="addContactConfirmBtn">Adicionar</button>
     </div>
    </div>
   </div><!-- Modal Criar Grupo -->
@@ -1140,28 +1140,28 @@
     <div class="modal-body">
      <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input">
      </div>
-     <div class="form-group"><label for="groupDescription">DescriÃ§Ã£o</label> <input type="text" id="groupDescription" placeholder="DescriÃ§Ã£o do grupo" class="search-input">
+     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input">
      </div>
      <div class="form-group"><label>Adicionar Imagem</label> <input type="file" id="groupImageInput" accept="image/*"> <button type="button" class="modal-btn modal-btn-secondary" style="width: 100%; margin-top: 8px;" onclick="document.getElementById('groupImageInput').click()">
        <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
        </svg> Selecionar Imagem </button>
      </div>
     </div>
-    <div class="modal-footer"><button type="button" class="modal-btn modal-btn-secondary" onclick="closeModal('createGroupModal')">Cancelar</button> <button type="button" class="modal-btn modal-btn-primary" id="createGroupConfirmBtn">Criar Grupo</button>
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('createGroupModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="createGroupConfirmBtn">Criar Grupo</button>
     </div>
    </div>
-  </div><!-- Modal ConfiguraÃ§Ãµes -->
+  </div><!-- Modal Configurações -->
   <div class="modal" id="settingsModal">
    <div class="modal-content">
     <div class="modal-header">
      <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
-     </svg> ConfiguraÃ§Ãµes
+     </svg> Configurações
     </div>
     <div class="modal-body">
      <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 12px;">
       <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-       </svg> UsuÃ¡rio
+       </svg> Usuário
       </div>
       <div style="font-size: 14px; color: var(--text-primary);" id="currentUserDisplay">
        -
@@ -1179,28 +1179,28 @@
      <div style="padding: 12px; background: var(--primary-dark); border-radius: 6px; border: 1px solid var(--border-color);">
       <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-       </svg> PermissÃµes
+       </svg> Permissões
       </div>
       <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
        <div style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
         <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" />
-        </svg> Microfone: <span id="micStatus">NÃ£o solicitado</span>
+        </svg> Microfone: <span id="micStatus">Não solicitado</span>
        </div>
        <div style="display: flex; align-items: center; gap: 6px;">
         <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-        </svg> CÃ¢mera: <span id="cameraStatus">NÃ£o solicitado</span>
+        </svg> Câmera: <span id="cameraStatus">Não solicitado</span>
        </div>
       </div>
      </div>
     </div>
-    <div class="modal-footer"><button type="button" class="modal-btn modal-btn-secondary" onclick="closeModal('settingsModal')">Fechar</button> <button type="button" class="modal-btn modal-btn-danger" id="logoutBtn">
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('settingsModal')">Fechar</button> <button class="modal-btn modal-btn-danger" id="logoutBtn">
       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
-      </svg> Sair </button> <button type="button" class="modal-btn modal-btn-danger" id="deleteAccountBtn">
+      </svg> Sair </button> <button class="modal-btn modal-btn-danger" id="deleteAccountBtn">
       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" />
       </svg> Excluir Conta </button>
     </div>
    </div>
-  </div><!-- Modal Confirmar ExclusÃ£o -->
+  </div><!-- Modal Confirmar Exclusão -->
   <div class="modal" id="confirmDeleteModal">
    <div class="modal-content">
     <div class="modal-header">
@@ -1208,9 +1208,9 @@
      </svg> Excluir Conta
     </div>
     <div class="modal-body">
-     <p style="color: var(--text-primary); font-size: 14px; line-height: 1.6;">Tem certeza? Esta aÃ§Ã£o Ã© irreversÃ­vel e todos os dados serÃ£o deletados permanentemente.</p>
+     <p style="color: var(--text-primary); font-size: 14px; line-height: 1.6;">Tem certeza? Esta ação é irreversível e todos os dados serão deletados permanentemente.</p>
     </div>
-    <div class="modal-footer"><button type="button" class="modal-btn modal-btn-secondary" onclick="closeModal('confirmDeleteModal')">Cancelar</button> <button type="button" class="modal-btn modal-btn-danger" id="confirmDeleteBtn">
+    <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('confirmDeleteModal')">Cancelar</button> <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">
       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" />
       </svg> Excluir Permanentemente </button>
     </div>
@@ -1231,7 +1231,7 @@
     </div>
     <div class="file-option" data-type="video">
      <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-     </svg> VÃ­deo
+     </svg> Vídeo
     </div>
    </div>
   </div><!-- Tela de Chamada -->
@@ -1245,7 +1245,7 @@
       00:00
      </div>
     </div>
-    <div class="call-controls"><button type="button" class="call-control-btn end-call" id="endCallBtn" title="Encerrar chamada">
+    <div class="call-controls"><button class="call-control-btn end-call" id="endCallBtn" title="Encerrar chamada">
       <svg width="22" height="22" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
       </svg></button>
     </div>
@@ -1253,7 +1253,7 @@
   </div><!-- Inputs de Arquivo --> <input type="file" id="fileInputDocument" accept=".pdf,.doc,.docx,.txt,.xlsx"> <input type="file" id="fileInputPhoto" accept="image/*"> <input type="file" id="fileInputVideo" accept="video/*">
   <script>
         /* ============================================
-           CONFIGURAÃ‡ÃƒO GLOBAL
+           CONFIGURAÇÃO GLOBAL
            ============================================ */
         
         const config = {
@@ -1279,7 +1279,7 @@
         
         function saveToStorage(key, value) {
             try {
-                (key, JSON.stringify(value));
+                localStorage.setItem(key, JSON.stringify(value));
             } catch (e) {
                 console.error('Erro ao salvar:', e);
             }
@@ -1302,7 +1302,7 @@
     requestPermissions();
 
     /* ============================================
-       MENU SIDEBAR (BOTÃƒO 3 BARRINHAS)
+       MENU SIDEBAR (BOTÃO 3 BARRINHAS)
        ============================================ */
 
     const menuBtn = document.getElementById('menuBtn');
@@ -1317,7 +1317,7 @@
     }
 
     /* ============================================
-       EXCLUIR CONVERSA (LONG PRESS + BOTÃƒO DIREITO)
+       EXCLUIR CONVERSA (LONG PRESS + BOTÃO DIREITO)
        ============================================ */
 
     const contactsList = document.getElementById('contactsList');
@@ -1383,7 +1383,7 @@
         }
 
         /* ============================================
-           AUTENTICAÃ‡ÃƒO
+           AUTENTICAÇÃO
            ============================================ */
         
         function setupAuthListeners() {
@@ -1423,7 +1423,7 @@
             const user = allUsers[username];
 
             if (!user || user.password !== password) {
-                showError('UsuÃ¡rio ou senha incorretos');
+                showError('Usuário ou senha incorretos');
                 return;
             }
 
@@ -1456,12 +1456,12 @@
             }
 
             if (username.length < 10) {
-                showError('UsuÃ¡rio deve ter pelo menos 10 caracteres');
+                showError('Usuário deve ter pelo menos 10 caracteres');
                 return;
             }
 
             if (!email.includes('@gmail.com')) {
-                showError('Use um Gmail vÃ¡lido');
+                showError('Use um Gmail válido');
                 return;
             }
 
@@ -1471,14 +1471,14 @@
             }
 
             if (password !== passwordConfirm) {
-                showError('As senhas nÃ£o conferem');
+                showError('As senhas não conferem');
                 return;
             }
 
             const allUsers = getFromStorage('chatbrasil_users', {});
 
             if (allUsers[username]) {
-                showError('Este usuÃ¡rio jÃ¡ existe');
+                showError('Este usuário já existe');
                 return;
             }
 
@@ -1621,7 +1621,7 @@
             });
 
             if (config.contacts.length === 0 && config.groups.length === 0) {
-                list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary); font-size: 13px;">Nenhuma conversa. Adicione um contato para comeÃ§ar!</div>';
+                list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary); font-size: 13px;">Nenhuma conversa. Adicione um contato para começar!</div>';
             }
         }
 
@@ -1641,23 +1641,23 @@
             const username = document.getElementById('newContactUsername').value.trim();
 
             if (!username) {
-                alert('Digite o nome de usuÃ¡rio');
+                alert('Digite o nome de usuário');
                 return;
             }
 
             const allUsers = getFromStorage('chatbrasil_users', {});
             if (!allUsers[username]) {
-                alert('UsuÃ¡rio nÃ£o encontrado');
+                alert('Usuário não encontrado');
                 return;
             }
 
             if (username === config.currentUser) {
-                alert('VocÃª nÃ£o pode adicionar a si mesmo');
+                alert('Você não pode adicionar a si mesmo');
                 return;
             }
 
             if (config.contacts.some(c => c.id === username)) {
-                alert('Este contato jÃ¡ existe');
+                alert('Este contato já existe');
                 return;
             }
 
@@ -1722,8 +1722,8 @@
             if (!config.selectedContact) {
                 container.innerHTML = `
                     <div class="empty-chat">
-                        <div class="empty-chat-icon">ðŸ’¬</div>
-                        <div class="empty-chat-text">Selecione uma conversa para comeÃ§ar</div>
+                        <div class="empty-chat-icon">💬</div>
+                        <div class="empty-chat-text">Selecione uma conversa para começar</div>
                     </div>
                 `;
                 return;
@@ -1734,7 +1734,7 @@
             if (messages.length === 0) {
                 container.innerHTML = `
                     <div class="empty-chat">
-                        <div class="empty-chat-icon">ðŸ’¬</div>
+                        <div class="empty-chat-icon">💬</div>
                         <div class="empty-chat-text">Nenhuma mensagem ainda</div>
                     </div>
                 `;
@@ -1752,7 +1752,7 @@
                 } else if (msg.type === 'photo') {
                     content = `Foto enviada`;
                 } else if (msg.type === 'video') {
-                    content = `VÃ­deo enviado`;
+                    content = `Vídeo enviado`;
                 }
 
                 msgEl.innerHTML = `
@@ -1808,7 +1808,7 @@
            ============================================ */
         
         function initializeEmojiPicker() {
-            const emojis = ['ðŸ˜€', 'ðŸ˜‚', 'â¤ï¸', 'ðŸ‘', 'ðŸŽ‰', 'ðŸ”¥', 'âœ¨', 'ðŸ˜', 'ðŸ˜¢', 'ðŸ˜¡', 'ðŸ‘Œ', 'ðŸ’¯', 'ðŸ™', 'ðŸ˜Ž', 'ðŸ¤”', 'ðŸ˜´', 'ðŸ‘‹', 'ðŸŽ‚', 'ðŸ•', 'â˜•', 'ðŸŽ®', 'ðŸŽµ', 'ðŸ“±', 'ðŸ’»', 'âœˆï¸', 'ðŸŒŸ', 'â­', 'ðŸŒˆ', 'ðŸ¦„', 'ðŸŽ¨'];
+            const emojis = ['😀', '😂', '❤️', '👍', '🎉', '🔥', '✨', '😍', '😢', '😡', '👌', '💯', '🙏', '😎', '🤔', '😴', '👋', '🎂', '🍕', '☕', '🎮', '🎵', '📱', '💻', '✈️', '🌟', '⭐', '🌈', '🦄', '🎨'];
             const picker = document.getElementById('emojiPicker');
             
             emojis.forEach(emoji => {
@@ -1957,7 +1957,7 @@
         }
 
         /* ============================================
-           PERMISSÃ•ES
+           PERMISSÕES
            ============================================ */
         
         function requestPermissions() {
@@ -1974,7 +1974,7 @@
                         updatePermissionStatus();
                     })
                     .catch(err => {
-                        console.log('CÃ¢mera nÃ£o disponÃ­vel');
+                        console.log('Câmera não disponível');
                     });
             }
         }
@@ -1988,7 +1988,7 @@
                         updatePermissionStatus();
                     })
                     .catch(err => {
-                        console.log('Microfone nÃ£o disponÃ­vel');
+                        console.log('Microfone não disponível');
                     });
             }
         }
@@ -2001,7 +2001,7 @@
         }
 
         /* ============================================
-           CONFIGURAÃ‡Ã•ES
+           CONFIGURAÇÕES
            ============================================ */
         
         function updateSettingsModal() {
@@ -2027,16 +2027,16 @@
          function deleteAccount() {
     const currentUsername = config.currentUser;
     
-    // Pega todos os usuÃ¡rios do localStorage
+    // Pega todos os usuários do localStorage
     const allUsers = JSON.parse(localStorage.getItem('chatbrasil_users') || '{}');
     
-    // Deleta o usuÃ¡rio atual
+    // Deleta o usuário atual
     if (allUsers[currentUsername]) {
         delete allUsers[currentUsername];
         localStorage.setItem('chatbrasil_users', JSON.stringify(allUsers));
     }
     
-    // Limpa todos os dados do usuÃ¡rio
+    // Limpa todos os dados do usuário
     localStorage.removeItem('chatbrasil_currentUser');
     localStorage.removeItem('chatbrasil_contacts_' + currentUsername);
     localStorage.removeItem('chatbrasil_messages_' + currentUsername);
@@ -2045,7 +2045,7 @@
     // Fecha o modal
     closeModal('confirmDeleteModal');
     
-    // Reseta a configuraÃ§Ã£o
+    // Reseta a configuração
     config.currentUser = null;
     config.currentUserEmail = null;
     config.selectedContact = null;
@@ -2053,13 +2053,13 @@
     config.messages = {};
     config.groups = [];
     
-    // Limpa formulÃ¡rios
+    // Limpa formulários
     clearAuthForms();
     
     // Mostra mensagem
     showSuccess('Conta deletada com sucesso!');
     
-    // Volta para login apÃ³s 1 segundo
+    // Volta para login após 1 segundo
     setTimeout(() => {
         showAuthScreen();
     }, 1000);
@@ -2082,7 +2082,7 @@
         }
 
         /* ============================================
-           UTILITÃRIOS
+           UTILITÁRIOS
            ============================================ */
         
         function saveUserData() {
@@ -2108,8 +2108,8 @@
             return div.innerHTML;
         }
 
-             /* ============================================
-           INICIALIZAÃ‡ÃƒO
+        /* ============================================
+           INICIALIZAÇÃO
            ============================================ */
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -2118,8 +2118,7 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.control-btn') && 
-                !e.target.closest('#emojiPickerPopup') &&
+            if (!e.target.closest('.control-btn') && !e.target.closest('#emojiPickerPopup') &&
                 !e.target.closest('#filesMenuPopup')) {
                 closeMenus();
             }
@@ -2131,9 +2130,5 @@
             }
         });
     </script>
-
-    <!-- SEU SCRIPT EXTERNO -->
-    <script src="script.js"></script>
-
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cce75adb0f97d48',t:'MTc3MDkyNDE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
