@@ -8,7 +8,7 @@ const API_URL = "https://chatbrasil.onrender.com";
 const socket = io(API_URL, {
     transports: ["websocket", "polling"]
 });
-// -----------------------------
+
 
 const chatContainer = document.getElementById("chatMessages");
 const chatInput = document.getElementById("chatInput");
@@ -113,9 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const email = document.getElementById("loginUsername").value.trim();
-            const password = document.getElementById("loginPassword").value.trim();
-            loginUser(email, password);
+            // O ID agora é 'loginEmail' para buscar o Gmail do usuário
+           const email = document.getElementById("loginEmail").value.trim(); 
+           const password = document.getElementById("loginPassword").value.trim();
+          // Envia o e-mail (Gmail) para a função de login
+          loginUser(email, password); 
         });
     }
 });
