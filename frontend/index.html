@@ -874,7 +874,7 @@
      <div class="auth-tabs"><button class="auth-tab active" data-mode="login">Entrar</button> <button class="auth-tab" data-mode="register">Cadastrar</button>
      </div><!-- FORMULÁRIO DE LOGIN -->
      <form id="loginForm" style="display: block;">
-      <div class="form-group"><label for="loginUsername">Usuário</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
+      <div class="form-group"><label for="loginUsername">Usuário</label> <input type="text" id="loginEmail" placeholder="seu_usuario" required>
       </div>
       <div class="form-group"><label for="loginPassword">Senha</label> <input type="password" id="loginPassword" placeholder="••••••••" required>
       </div><button type="submit" class="auth-button">Entrar</button>
@@ -962,7 +962,7 @@
     <div class="input-wrapper">
       <div class="typing-indicator" id="typingIndicator"></div>
 
-      <div class="permission-prompt" id="permissionPrompt">
+      <div class="permission-prompt" id="permissionPrompt" style="display: none;">
         <div class="permission-prompt-title">
           Permissões: Permitido
         </div>
@@ -1858,14 +1858,14 @@
         
         function requestPermissions() {
             const prompt = document.getElementById('permissionPrompt');
-            prompt.classList.add('show');
+            
         }
 
         function requestCameraPermission() {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then(stream => {
-                        config.permissionsGranted.camera = true;
+                        config.permissionsGranted.camera = true; document.getElementById("permissionPrompt").style.display = "block"; document.getElementById("permissionPrompt").style.display = "block";
                         stream.getTracks().forEach(track => track.stop());
                         updatePermissionStatus();
                     })
@@ -1879,7 +1879,7 @@
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then(stream => {
-                        config.permissionsGranted.microphone = true;
+                        config.permissionsGranted.microphone = true; document.getElementById("permissionPrompt").style.display = "block"; document.getElementById("permissionPrompt").style.display = "block";
                         stream.getTracks().forEach(track => track.stop());
                         updatePermissionStatus();
                     })
@@ -2031,7 +2031,7 @@
     <!-- SEU SCRIPT EXTERNO -->
     <script src="https://cdn.socket.io"></script>
     <script src="script.js"></script>
-
+    
 
 </body>
 </html>
