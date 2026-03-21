@@ -5,7 +5,7 @@ console.log("SCRIPT CARREGADO OK");
 const API_URL = "https://chatbrasil.onrender.com"; 
 
 // Conecta o socket apontando para a API_URL
-const socket = io (API_URL {
+const socket = io (API_URL, {
     transports: ["websocket", "polling"]
 });
 
