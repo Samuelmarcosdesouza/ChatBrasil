@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat Brasil - Comunicação Profissional</title>
+<link rel="icon" type="image/png" href="favicon.png?v=4">
   <style>
+
         /* ============================================
            RESET E VARIÁVEIS GLOBAIS
            ============================================ */
@@ -975,6 +977,19 @@
         padding: 32px 20px;
     }
 }
+<!-- 2. AQUI VOCÊ COLOCA A FERRAMENTA DO SUPABASE (LINK COMPLETO) -->
+<script src="https://cdn.jsdelivr.net"></script>
+
+<!-- 3. AQUI COMEÇA O SEU JAVASCRIPT DE CONEXÃO E LÓGICA -->
+<script>
+    const _supabaseUrl = 'https://fcxijdkfpestqodgripr.supabase.co';
+    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGlqZGtmcGVzdHFvZGdyaXByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2OTA0MTgsImV4cCI6MjA4NzI2NjQxOH0.4Z-6kA4NZey1XekCQ4YWq-s1v6JOlHCuQokihz8zVi8';
+    
+    // Agora o comando abaixo vai funcionar porque o link de cima está completo!
+    const supabase = supabase.createClient(_supabaseUrl, _supabaseKey);
+
+    console.log("Sistema de Chat Iniciado e Conectado!");
+</script>
 
     </style>
   <script src="/_sdk/element_sdk.js"></script>
@@ -1028,7 +1043,7 @@
         </svg></button>
       </div>
      </div>
-     <div class="sidebar-search"><input type="text" class="search-input" id="searchInput" placeholder="Procurar...">
+     <div class="sidebar-search"><input type="text" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px" id="searchInput" placeholder="Procurar...">
      </div>
      <div class="contacts-list" id="contactsList"></div>
    </div><!-- CHAT MAIN -->
@@ -1124,7 +1139,7 @@
      </svg> Adicionar Contato
     </div>
     <div class="modal-body">
-     <div class="form-group"><label for="newContactUsername">Nome de Usuário</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuário" class="search-input">
+     <div class="form-group"><label for="newContactUsername">Nome de Usuário</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuário" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px">
      </div>
     </div>
     <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('addContactModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="addContactConfirmBtn">Adicionar</button>
@@ -1138,9 +1153,9 @@
      </svg> Criar Grupo
     </div>
     <div class="modal-body">
-     <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input">
+     <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px">
      </div>
-     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input">
+     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px">
      </div>
      <div class="form-group"><label>Adicionar Imagem</label> <input type="file" id="groupImageInput" accept="image/*"> <button type="button" class="modal-btn modal-btn-secondary" style="width: 100%; margin-top: 8px;" onclick="document.getElementById('groupImageInput').click()">
        <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
