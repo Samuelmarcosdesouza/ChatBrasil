@@ -911,7 +911,6 @@
      </form>
     </div>
    </div><!-- CHAT WRAPPER -->
-   <button class="icon-btn" id="openSidebarBtn" title="Abrir Menu">☰</button>
    <div class="chat-wrapper" id="chatWrapper"><!-- SIDEBAR -->
     <div class="sidebar">
      <div class="sidebar-header">
@@ -2070,6 +2069,8 @@ if (btnFechar && sidebar) {
 
 </body>
 </html>
+
+
 
 
 
