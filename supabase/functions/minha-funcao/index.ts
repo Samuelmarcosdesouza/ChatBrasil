@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat Brasil - Comunicação Profissional</title>
-<link rel="icon" type="image/png" href="favicon.png?v=4">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="/icon-512.png">
   <style>
 
         /* ============================================
@@ -213,167 +214,7 @@
             display: flex;
         }
 
-        /* ============================================
-           SIDEBAR
-           ============================================ */
-        
-       .sidebar {
-    width: 320px;
-    background: var(--primary-medium);
-    border-right: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-/* Estado fechado (mobile) */
-.sidebar.closed {
-    transform: translateX(-100%);
-}
-
-/* Estado aberto */
-.sidebar.open {
-    transform: translateX(0);
-}
-
-        .sidebar-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sidebar-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-        }
-
-        .sidebar-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            background: var(--primary-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .icon-btn:hover {
-            background: var(--primary-light);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .sidebar-search {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 12px;
-            background: var(--primary-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 13px;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .contacts-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px;
-        }
-
-        .contact-item {
-            padding: 12px;
-            margin-bottom: 4px;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .contact-item:hover {
-            background: var(--primary-dark);
-            border-color: var(--border-color);
-        }
-
-        .contact-item.active {
-            background: var(--primary-dark);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .contact-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #60a5fa);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .contact-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .contact-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .contact-status {
-            font-size: 12px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .online-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--success);
-            flex-shrink: 0;
-            box-shadow: 0 0 0 2px var(--primary-medium);
-        }
-
+       
         /* ============================================
            CHAT MAIN
            ============================================ */
@@ -928,52 +769,95 @@
             display: none;
         }
 
-        /* ============================================
+       /* ============================================
            RESPONSIVIDADE
            ============================================ */
-@media (max-width: 768px) {
-    /* ============================================
-   SIDEBAR CONTROLE GLOBAL
-   ============================================ */
 
+/* Estado inicial: Totalmente invisível e fora da tela */
 .sidebar {
-    width: 280px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 320px;
+    z-index: 9999;
+    background: #1a1a1a;
+    display: none; /* <--- O segredo está aqui: ela não existe até o login */
+    flex-direction: column;
+    transform: translateX(-100%); /* Totalmente para a esquerda */
     transition: transform 0.3s ease;
-    transform: translateX(-100%); /* começa fechada */
 }
 
+/* Classe que será adicionada pelo JavaScript APÓS o login */
+.sidebar.logado {
+    display: flex; /* Faz a barra passar a existir no HTML */
+}
+#openSidebarBtn {
+    display: none; /* Começa escondido no login */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 998; /* Um pouco abaixo da sidebar aberta */
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 30px; /* Tamanho das 3 barrinhas */
+    color: white;
+}
+/* Classe que abre e fecha a barra ao clicar nas 3 barrinhas */
 .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
+}
+.sidebar-actions {
+    display: flex;
+    justify-content: flex-end; /* Empurra tudo para a direita da barra */
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+ #closeSidebarBtn {
+    min-width: 50px;
+    order: 10; /* Garante que ele seja o ÚLTIMO da lista */
+    cursor: pointer;
+}
+.message-content {
+    max-width: 85%;
 }
 
+.auth-card {
+    margin: 20px;
+}
+
+#menuBtn {
+    display: flex !important; 
+    cursor: pointer;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important; /* Isso garante que o desenho ☰ apareça em branco */
+}
+@media (max-width: 768px) {
+    .sidebar {
+        width: 280px; /* No celular a barra diminui para não tapar tudo */
+    }
     .message-content {
         max-width: 85%;
     }
-
     .auth-card {
         margin: 20px;
     }
 }
+
 @media (max-width: 480px) {
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 260px;
-        z-index: 1000;
+        width: 260px; /* Diminui mais ainda em telas pequenas */
     }
-
     .chat-main {
         width: 100%;
     }
-
     .message-content {
         max-width: 90%;
     }
-
     .auth-card {
-        margin: 20px;
         padding: 32px 20px;
     }
 }
@@ -992,6 +876,7 @@
 </script>
 
     </style>
+  <script src="https://cdn.socket.io"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <style>body { box-sizing: border-box; }</style>
   <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
@@ -1009,7 +894,7 @@
      <div class="auth-tabs"><button class="auth-tab active" data-mode="login">Entrar</button> <button class="auth-tab" data-mode="register">Cadastrar</button>
      </div><!-- FORMULÁRIO DE LOGIN -->
      <form id="loginForm" style="display: block;">
-      <div class="form-group"><label for="loginUsername">Usuário</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
+      <div class="form-group"><label for="loginUsername">Usuário</label> <input type="text" id="loginEmail" placeholder="seu_usuario" required>
       </div>
       <div class="form-group"><label for="loginPassword">Senha</label> <input type="password" id="loginPassword" placeholder="••••••••" required>
       </div><button type="submit" class="auth-button">Entrar</button>
@@ -1029,8 +914,6 @@
    <div class="chat-wrapper" id="chatWrapper"><!-- SIDEBAR -->
     <div class="sidebar">
      <div class="sidebar-header">
-      <!-- BOTÃO 3 BARRINHAS (SÓ APARECE NO CELULAR) -->
-    <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
       <div class="sidebar-title">
        Conversas
       </div>
@@ -1040,15 +923,18 @@
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg></button> <button class="icon-btn" id="settingsBtn" title="Configurações">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
-        </svg></button>
+         </svg></button>
+       <button class="icon-btn" id="closeSidebarBtn" title="Fechar Menu">☰</button>
       </div>
      </div>
-     <div class="sidebar-search"><input type="text" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px" id="searchInput" placeholder="Procurar...">
+     <div class="sidebar-search"><input type="text" class="search-input" id="searchInput" placeholder="Procurar...">
      </div>
      <div class="contacts-list" id="contactsList"></div>
    </div><!-- CHAT MAIN -->
 <div class="chat-main">
   <div class="chat-header">
+    <!--  O BOTÃO AGORA FICA AQUI PARA SEMPRE APARECER -->
+    <button class="icon-btn" id="menuBtn" title="Menu" style="margin-right: 15px; display: flex !important;">☰</button>
     <div class="chat-header-info">
 
       <div class="chat-header-title" id="chatTitle">
@@ -1097,7 +983,7 @@
     <div class="input-wrapper">
       <div class="typing-indicator" id="typingIndicator"></div>
 
-      <div class="permission-prompt" id="permissionPrompt">
+      <div class="permission-prompt" id="permissionPrompt" style="display: none;">
         <div class="permission-prompt-title">
           Permissões: Permitido
         </div>
@@ -1139,7 +1025,7 @@
      </svg> Adicionar Contato
     </div>
     <div class="modal-body">
-     <div class="form-group"><label for="newContactUsername">Nome de Usuário</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuário" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px">
+     <div class="form-group"><label for="newContactUsername">Nome de Usuário</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuário" class="search-input">
      </div>
     </div>
     <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('addContactModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="addContactConfirmBtn">Adicionar</button>
@@ -1153,9 +1039,9 @@
      </svg> Criar Grupo
     </div>
     <div class="modal-body">
-     <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px">
+     <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input">
      </div>
-     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input" style="background-color:#0f172a;border:1px solid #334155;color:white;width:100%;padding:8px;border-radius:5px">
+     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input">
      </div>
      <div class="form-group"><label>Adicionar Imagem</label> <input type="file" id="groupImageInput" accept="image/*"> <button type="button" class="modal-btn modal-btn-secondary" style="width: 100%; margin-top: 8px;" onclick="document.getElementById('groupImageInput').click()">
        <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
@@ -1319,17 +1205,22 @@
     /* ============================================
        MENU SIDEBAR (BOTÃO 3 BARRINHAS)
        ============================================ */
-
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.querySelector('.sidebar');
-
-    if (menuBtn && sidebar) {
-        sidebar.classList.remove('open');
-
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-    }
+   const btnAbrir = document.getElementById('openSidebarBtn');
+   const sidebar = document.querySelector('.sidebar');
+   const btnFechar = document.getElementById('closeSidebarBtn');
+   if (sidebar) {
+    sidebar.classList.remove('open');
+}
+if (menuBtn && sidebar) {
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.add('open'); // Usar 'add' é mais seguro que 'toggle' aqui
+    });
+}
+if (btnFechar && sidebar) {
+    btnFechar.addEventListener('click', () => {
+        sidebar.classList.remove('open'); 
+    });
+}
 
     /* ============================================
        EXCLUIR CONVERSA (LONG PRESS + BOTÃO DIREITO)
@@ -1451,11 +1342,19 @@
             saveToStorage('chatbrasil_currentUser', username);
             showSuccess('Bem-vindo de volta!');
             
-            setTimeout(() => {
-                showChatScreen();
-                renderContacts();
-            }, 500);
+         setTimeout(() => {
+    showChatScreen();
+    renderContacts();
+
+    setTimeout(() => {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.classList.remove('open');
         }
+    }, 100);
+
+}, 500);
+}
 
         function handleRegister(e) {
             e.preventDefault();
@@ -1516,12 +1415,20 @@
 
             showSuccess('Conta criada com sucesso!');
 
-            setTimeout(() => {
-                showChatScreen();
-                renderContacts();
-                clearAuthForms();
-            }, 500);
+           setTimeout(() => {
+    showChatScreen();
+    renderContacts();
+    clearAuthForms();
+
+    setTimeout(() => {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.classList.remove('open');
         }
+    }, 100);
+
+}, 500);
+}
 
         function showError(message) {
             const errorEl = document.getElementById('authError');
@@ -1977,14 +1884,14 @@
         
         function requestPermissions() {
             const prompt = document.getElementById('permissionPrompt');
-            prompt.classList.add('show');
+            
         }
 
         function requestCameraPermission() {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then(stream => {
-                        config.permissionsGranted.camera = true;
+                        config.permissionsGranted.camera = true; document.getElementById("permissionPrompt").style.display = "block"; 
                         stream.getTracks().forEach(track => track.stop());
                         updatePermissionStatus();
                     })
@@ -1998,7 +1905,7 @@
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then(stream => {
-                        config.permissionsGranted.microphone = true;
+                        config.permissionsGranted.microphone = true; document.getElementById("permissionPrompt").style.display = "block";
                         stream.getTracks().forEach(track => track.stop());
                         updatePermissionStatus();
                     })
@@ -2148,8 +2055,14 @@
     </script>
 
     <!-- SEU SCRIPT EXTERNO -->
+    <script src="https://cdn.socket.io"></script>
     <script src="script.js"></script>
+    
 
 </body>
 </html>
+
+
+
+
 

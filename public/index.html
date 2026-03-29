@@ -769,10 +769,11 @@
             display: none;
         }
 
-        /* ============================================
+       /* ============================================
            RESPONSIVIDADE
            ============================================ */
 
+/* Estado inicial: Totalmente invisível e fora da tela */
 .sidebar {
     position: fixed;
     left: 0;
@@ -780,13 +781,30 @@
     bottom: 0;
     width: 320px;
     z-index: 9999;
-    /* Faz a barra começar escondida, mas deixa o botão (50px) para fora */
-    transform: translateX(-270px); 
-    transition: transform 0.3s ease;
-    background: #1a1a1a; /* Use sua cor primary-medium */
-    display: flex;
+    background: #1a1a1a;
+    display: none; /* <--- O segredo está aqui: ela não existe até o login */
     flex-direction: column;
+    transform: translateX(-100%); /* Totalmente para a esquerda */
+    transition: transform 0.3s ease;
 }
+
+/* Classe que será adicionada pelo JavaScript APÓS o login */
+.sidebar.logado {
+    display: flex; /* Faz a barra passar a existir no HTML */
+}
+#openSidebarBtn {
+    display: none; /* Começa escondido no login */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 998; /* Um pouco abaixo da sidebar aberta */
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 30px; /* Tamanho das 3 barrinhas */
+    color: white;
+}
+/* Classe que abre e fecha a barra ao clicar nas 3 barrinhas */
 .sidebar.open {
     transform: translateX(0) !important;
 }
@@ -797,7 +815,7 @@
     padding: 10px;
     gap: 10px;
 }
-#closeSidebarBtn {
+ #closeSidebarBtn {
     min-width: 50px;
     order: 10; /* Garante que ele seja o ÚLTIMO da lista */
     cursor: pointer;
@@ -905,7 +923,7 @@
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg></button> <button class="icon-btn" id="settingsBtn" title="Configurações">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
-       </svg></button>
+         </svg></button>
        <button class="icon-btn" id="closeSidebarBtn" title="Fechar Menu">☰</button>
       </div>
      </div>
@@ -1187,28 +1205,22 @@
     /* ============================================
        MENU SIDEBAR (BOTÃO 3 BARRINHAS)
        ============================================ */
-const btnFechar = document.getElementById('closeSidebarBtn'); 
-const sidebar = document.querySelector('.sidebar');
-
-
-if (sidebar) {
+   const btnAbrir = document.getElementById('openSidebarBtn');
+   const sidebar = document.querySelector('.sidebar');
+   const btnFechar = document.getElementById('closeSidebarBtn');
+   if (sidebar) {
     sidebar.classList.remove('open');
 }
-
-
 if (menuBtn && sidebar) {
     menuBtn.addEventListener('click', () => {
         sidebar.classList.add('open'); // Usar 'add' é mais seguro que 'toggle' aqui
     });
 }
-
-
 if (btnFechar && sidebar) {
     btnFechar.addEventListener('click', () => {
         sidebar.classList.remove('open'); 
     });
 }
-
 
     /* ============================================
        EXCLUIR CONVERSA (LONG PRESS + BOTÃO DIREITO)
@@ -2049,4 +2061,8 @@ if (btnFechar && sidebar) {
 
 </body>
 </html>
+
+
+
+
 
