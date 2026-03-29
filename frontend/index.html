@@ -793,11 +793,11 @@
     display: flex; /* Faz a barra passar a existir no HTML */
 }
 #openSidebarBtn {
-    display: none; /* Começa escondido no login */
+    display: block !important;  /* Começa escondido no login */
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 998; /* Um pouco abaixo da sidebar aberta */
+    z-index: 9999; /* Um pouco abaixo da sidebar aberta */
     cursor: pointer;
     background: none;
     border: none;
@@ -2069,6 +2069,7 @@ if (btnFechar && sidebar) {
 
 </body>
 </html>
+
 
 
 
