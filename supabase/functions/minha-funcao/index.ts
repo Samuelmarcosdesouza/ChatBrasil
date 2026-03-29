@@ -1208,19 +1208,27 @@
    const btnAbrir = document.getElementById('openSidebarBtn');
    const sidebar = document.querySelector('.sidebar');
    const btnFechar = document.getElementById('closeSidebarBtn');
-   if (sidebar) {
+  // Garante que a sidebar comece fechada ao carregar a página
+if (sidebar) {
     sidebar.classList.remove('open');
 }
-if (menuBtn && sidebar) {
-    menuBtn.addEventListener('click', () => {
-        sidebar.classList.add('open'); // Usar 'add' é mais seguro que 'toggle' aqui
+
+// ABRIR: Troquei 'menuBtn' por 'btnAbrir' para bater com o seu ID
+if (btnAbrir && sidebar) {
+    btnAbrir.addEventListener('click', () => {
+        sidebar.classList.add('open'); 
+        console.log("Menu aberto!"); // Para você ver no F12 que funcionou
     });
 }
+
+// FECHAR:
 if (btnFechar && sidebar) {
     btnFechar.addEventListener('click', () => {
         sidebar.classList.remove('open'); 
+        console.log("Menu fechado!");
     });
 }
+
 
     /* ============================================
        EXCLUIR CONVERSA (LONG PRESS + BOTÃO DIREITO)
@@ -2061,6 +2069,7 @@ if (btnFechar && sidebar) {
 
 </body>
 </html>
+
 
 
 
