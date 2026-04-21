@@ -3,13 +3,13 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Brasil - ComunicaÃ§Ã£o Profissional</title>
+  <title>Chat Brasil</title>
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="/icon-512.png">
   <style>
 
         /* ============================================
-           RESET E VARIÃVEIS GLOBAIS
+           RESET E VARIAVEIS GLOBAIS
            ============================================ */
         
         * {
@@ -49,7 +49,7 @@
         }
 
         /* ============================================
-           TELA DE AUTENTICAÃ‡ÃƒO
+           TELA DE AUTENTICÃO
            ============================================ */
         
         .auth-container {
@@ -773,7 +773,7 @@
            RESPONSIVIDADE
            ============================================ */
 
-/* Estado inicial: Totalmente invisÃ­vel e fora da tela */
+
 .sidebar {
     position: fixed;
     left: 0;
@@ -782,46 +782,46 @@
     width: 320px;
     z-index: 9999;
     background: #1a1a1a;
-    display: none; /* <--- O segredo estÃ¡ aqui: ela nÃ£o existe atÃ© o login */
+    display: none; 
     flex-direction: column;
-    transform: translateX(-100%); /* Totalmente para a esquerda */
+    transform: translateX(-100%); 
     transition: transform 0.3s ease;
 }
 
-/* Classe que serÃ¡ adicionada pelo JavaScript APÃ“S o login */
+
 .sidebar.logado {
-    display: flex; /* Faz a barra passar a existir no HTML */
+    display: flex; 
 }
    .sidebar.open {
     display: flex !important; 
     transform: translateX(0) !important;
 }
 #menuBtn {
-    display: block !important;  /* ComeÃ§a escondido no login */
+    display: block !important;  
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 9999; /* Um pouco abaixo da sidebar aberta */
+    z-index: 9999; 
     cursor: pointer;
     background: none;
     border: none;
-    font-size: 30px; /* Tamanho das 3 barrinhas */
+    font-size: 30px; 
     color: white;
 }
-/* Classe que abre e fecha a barra ao clicar nas 3 barrinhas */
+
 .sidebar.open {
     transform: translateX(0) !important;
 }
 .sidebar-actions {
     display: flex;
-    justify-content: flex-end; /* Empurra tudo para a direita da barra */
+    justify-content: flex-end; 
     align-items: center;
     padding: 10px;
     gap: 10px;
 }
  #closeSidebarBtn {
     min-width: 50px;
-    order: 10; /* Garante que ele seja o ÃšLTIMO da lista */
+    order: 10; 
     cursor: pointer;
 }
 .message-content {
@@ -837,11 +837,11 @@
     cursor: pointer;
     visibility: visible !important;
     opacity: 1 !important;
-    color: white !important; /* Isso garante que o desenho â˜° apareÃ§a em branco */
+    color: white !important; 
 }
 @media (max-width: 768px) {
     .sidebar {
-        width: 280px; /* No celular a barra diminui para nÃ£o tapar tudo */
+        width: 280px; 
     }
     .message-content {
         max-width: 85%;
@@ -853,7 +853,7 @@
 
 @media (max-width: 480px) {
     .sidebar {
-        width: 260px; /* Diminui mais ainda em telas pequenas */
+        width: 260px; 
     }
     .chat-main {
         width: 100%;
@@ -865,15 +865,15 @@
         padding: 32px 20px;
     }
 }
-<!-- 2. AQUI VOCÃŠ COLOCA A FERRAMENTA DO SUPABASE (LINK COMPLETO) -->
+
 <script src="https://cdn.jsdelivr.net"></script>
 
-<!-- 3. AQUI COMEÃ‡A O SEU JAVASCRIPT DE CONEXÃƒO E LÃ“GICA -->
+
 <script>
     const _supabaseUrl = 'https://fcxijdkfpestqodgripr.supabase.co';
     const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGlqZGtmcGVzdHFvZGdyaXByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2OTA0MTgsImV4cCI6MjA4NzI2NjQxOH0.4Z-6kA4NZey1XekCQ4YWq-s1v6JOlHCuQokihz8zVi8';
     
-    // Agora o comando abaixo vai funcionar porque o link de cima estÃ¡ completo!
+   
     const supabase = supabase.createClient(_supabaseUrl, _supabaseKey);
 
     console.log("Sistema de Chat Iniciado e Conectado!");
@@ -887,7 +887,7 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body>
-  <div class="container"><!-- TELA DE AUTENTICAÃ‡ÃƒO -->
+  <div class="container"><!-- TELA DE AUTENTICÃO -->
    <div class="auth-container" id="authContainer">
     <div class="auth-card">
      <div class="auth-header">
@@ -896,21 +896,21 @@
      <div class="error-message" id="authError"></div>
      <div class="success-message" id="authSuccess"></div>
      <div class="auth-tabs"><button class="auth-tab active" data-mode="login">Entrar</button> <button class="auth-tab" data-mode="register">Cadastrar</button>
-     </div><!-- FORMULÃRIO DE LOGIN -->
+     </div><!-- FORMULARIO DE LOGIN -->
      <form id="loginForm" style="display: block;">
-      <div class="form-group"><label for="loginUsername">UsuÃ¡rio</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
+      <div class="form-group"><label for="loginUsername">Usuario</label> <input type="text" id="loginUsername" placeholder="seu_usuario" required>
       </div>
       <div class="form-group"><label for="loginPassword">Senha</label> <input type="password" id="loginPassword" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
       </div><button type="submit" class="auth-button">Entrar</button>
-     </form><!-- FORMULÃRIO DE REGISTRO -->
+     </form><!-- FORMULARIO DE REGISTRO -->
      <form id="registerForm" style="display: none;">
-      <div class="form-group"><label for="registerUsername">UsuÃ¡rio</label> <input type="text" id="registerUsername" placeholder="seu_usuario" required>
+      <div class="form-group"><label for="registerUsername">Usuario</label> <input type="text" id="registerUsername" placeholder="seu_usuario" required>
       </div>
       <div class="form-group"><label for="registerEmail">Gmail</label> <input type="email" id="registerEmail" placeholder="seu_@gmail.com" required>
       </div>
-      <div class="form-group"><label for="registerPassword">Senha</label> <input type="password" id="registerPassword" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+      <div class="form-group"><label for="registerPassword">Senha</label> <input type="password" id="registerPassword" placeholder="************************" required>
       </div>
-      <div class="form-group"><label for="registerPasswordConfirm">Confirmar Senha</label> <input type="password" id="registerPasswordConfirm" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+      <div class="form-group"><label for="registerPasswordConfirm">Confirmar Senha</label> <input type="password" id="registerPasswordConfirm" placeholder="************************" required>
       </div><button type="submit" class="auth-button">Cadastrar</button>
      </form>
     </div>
@@ -925,10 +925,10 @@
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" />
         </svg></button> <button class="icon-btn" id="groupBtn" title="Criar grupo">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg></button> <button class="icon-btn" id="settingsBtn" title="ConfiguraÃ§Ãµes">
+        </svg></button> <button class="icon-btn" id="settingsBtn" title="Configuracoes">
         <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
          </svg></button>
-       <button class="icon-btn" id="closeSidebarBtn" title="Fechar Menu">â˜°</button>
+       <button class="icon-btn" id="closeSidebarBtn" title="Fechar Menu">☰</button>
       </div>
      </div>
      <div class="sidebar-search"><input type="text" class="search-input" id="searchInput" placeholder="Procurar...">
@@ -937,8 +937,8 @@
    </div><!-- CHAT MAIN -->
 <div class="chat-main">
   <div class="chat-header">
-    <!--  O BOTÃƒO AGORA FICA AQUI PARA SEMPRE APARECER -->
-    <button class="icon-btn" id="menuBtn" title="Menu" style="margin-right: 15px; display: flex !important;">â˜°</button>
+    <!--  O BOTÃO AGORA FICA AQUI PARA SEMPRE APARECER -->
+    <button class="icon-btn" id="menuBtn" title="Menu" style="margin-right: 15px; display: flex !important;">☰</button>
     <div class="chat-header-info">
 
       <div class="chat-header-title" id="chatTitle">
@@ -964,7 +964,7 @@
         </svg>
       </button>
 
-      <button class="call-btn" id="videoBtn" title="Chamada de VÃ­deo">
+      <button class="call-btn" id="videoBtn" title="Chamada de Vi­deo">
         <svg width="18" height="18" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="23 7 16 12 23 17 23 7"/>
@@ -978,7 +978,7 @@
     <div class="empty-chat">
       <div class="empty-chat-icon"></div>
       <div class="empty-chat-text">
-        Selecione uma conversa para comeÃ§ar
+        Selecione uma conversa para conversar
       </div>
     </div>
   </div>
@@ -989,10 +989,10 @@
 
       <div class="permission-prompt" id="permissionPrompt" style="display: none;">
         <div class="permission-prompt-title">
-          PermissÃµes: Permitido
+          Permisões: Permitido
         </div>
         <div class="permission-prompt-text">
-          CÃ¢mera e microfone foram ativados com sucesso.
+          Camera e microfone foram ativados com sucesso.
         </div>
       </div>
 
@@ -1029,7 +1029,7 @@
      </svg> Adicionar Contato
     </div>
     <div class="modal-body">
-     <div class="form-group"><label for="newContactUsername">Nome de UsuÃ¡rio</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuÃ¡rio" class="search-input">
+     <div class="form-group"><label for="newContactUsername">Nome de Usuario</label> <input type="text" id="newContactUsername" placeholder="Digite o nome de usuario" class="search-input">
      </div>
     </div>
     <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('addContactModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="addContactConfirmBtn">Adicionar</button>
@@ -1045,7 +1045,7 @@
     <div class="modal-body">
      <div class="form-group"><label for="groupName">Nome do Grupo</label> <input type="text" id="groupName" placeholder="Digite o nome" class="search-input">
      </div>
-     <div class="form-group"><label for="groupDescription">DescriÃ§Ã£o</label> <input type="text" id="groupDescription" placeholder="DescriÃ§Ã£o do grupo" class="search-input">
+     <div class="form-group"><label for="groupDescription">Descrição</label> <input type="text" id="groupDescription" placeholder="Descrição do grupo" class="search-input">
      </div>
      <div class="form-group"><label for="groupImageInput">Adicionar Imagem</label> <input type="file" id="groupImageInput" accept="image/*"> <button type="button" class="modal-btn modal-btn-secondary" style="width: 100%; margin-top: 8px;" onclick="document.getElementById('groupImageInput').click()">
        <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
@@ -1055,18 +1055,18 @@
     <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('createGroupModal')">Cancelar</button> <button class="modal-btn modal-btn-primary" id="createGroupConfirmBtn">Criar Grupo</button>
     </div>
    </div>
-  </div><!-- Modal ConfiguraÃ§Ãµes -->
+  </div><!-- Modal Configurações -->
   <div class="modal" id="settingsModal">
    <div class="modal-content">
     <div class="modal-header">
      <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24" />
-     </svg> ConfiguraÃ§Ãµes
+     </svg> Configuração
     </div>
     <div class="modal-body">
      <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 12px;">
       <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-       </svg> UsuÃ¡rio
+       </svg> Usuario
       </div>
       <div style="font-size: 14px; color: var(--text-primary);" id="currentUserDisplay">
        -
@@ -1084,16 +1084,16 @@
      <div style="padding: 12px; background: var(--primary-dark); border-radius: 6px; border: 1px solid var(--border-color);">
       <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-       </svg> PermissÃµes
+       </svg> Permisões
       </div>
       <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
        <div style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
         <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" />
-        </svg> Microfone: <span id="micStatus">NÃ£o solicitado</span>
+        </svg> Microfone: <span id="micStatus">Não solicitado</span>
        </div>
        <div style="display: flex; align-items: center; gap: 6px;">
         <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-        </svg> CÃ¢mera: <span id="cameraStatus">NÃ£o solicitado</span>
+        </svg> Camera: <span id="cameraStatus">Não solicitado</span>
        </div>
       </div>
      </div>
@@ -1105,7 +1105,7 @@
       </svg> Excluir Conta </button>
     </div>
    </div>
-  </div><!-- Modal Confirmar ExclusÃ£o -->
+  </div><!-- Modal Confirmar Exclusão -->
   <div class="modal" id="confirmDeleteModal">
    <div class="modal-content">
     <div class="modal-header">
@@ -1113,7 +1113,7 @@
      </svg> Excluir Conta
     </div>
     <div class="modal-body">
-     <p style="color: var(--text-primary); font-size: 14px; line-height: 1.6;">Tem certeza? Esta aÃ§Ã£o Ã© irreversÃ­vel e todos os dados serÃ£o deletados permanentemente.</p>
+     <p style="color: var(--text-primary); font-size: 14px; line-height: 1.6;">Tem certeza? Que deseja excluir esta conta todos os dados serão deletados permanentemente.</p>
     </div>
     <div class="modal-footer"><button class="modal-btn modal-btn-secondary" onclick="closeModal('confirmDeleteModal')">Cancelar</button> <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">
       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 6px;"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" />
@@ -1136,7 +1136,7 @@
     </div>
     <div class="file-option" data-type="video">
      <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-     </svg> VÃ­deo
+     </svg> Video
     </div>
    </div>
   </div><!-- Tela de Chamada -->
@@ -1158,7 +1158,7 @@
   </div><!-- Inputs de Arquivo --> <input type="file" id="fileInputDocument" accept=".pdf,.doc,.docx,.txt,.xlsx"> <input type="file" id="fileInputPhoto" accept="image/*"> <input type="file" id="fileInputVideo" accept="video/*">
   <script>
         /* ============================================
-           CONFIGURAÃ‡ÃƒO GLOBAL
+           CONFIGURAÇÕES GLOBAL
            ============================================ */
         
         const config = {
@@ -1212,20 +1212,20 @@
    const btnAbrir = document.getElementById('menuBtn');
    const sidebar = document.querySelector('.sidebar');
    const btnFechar = document.getElementById('closeSidebarBtn');
-  // Garante que a sidebar comece fechada ao carregar a pÃ¡gina
+  
 if (sidebar) {
     sidebar.classList.remove('open');
 }
 
-// ABRIR: Troquei 'menuBtn' por 'btnAbrir' para bater com o seu ID
+
 if (btnAbrir && sidebar) {
     btnAbrir.addEventListener('click', () => {
         sidebar.classList.add('open'); 
-        console.log("Menu aberto!"); // Para vocÃª ver no F12 que funcionou
+        console.log("Menu aberto!");
     });
 }
 
-// FECHAR:
+
 if (btnFechar && sidebar) {
     btnFechar.addEventListener('click', () => {
         sidebar.classList.remove('open'); 
@@ -1235,7 +1235,7 @@ if (btnFechar && sidebar) {
 
 
     /* ============================================
-       EXCLUIR CONVERSA (LONG PRESS + BOTÃƒO DIREITO)
+       EXCLUIR CONVERSA (LONG PRESS + BOTÃO DIREITO)
        ============================================ */
 
     const contactsList = document.getElementById('contactsList');
@@ -1244,7 +1244,7 @@ if (btnFechar && sidebar) {
 
         let pressTimer;
 
-        // Segurar (touch ou mouse)
+       
         contactsList.addEventListener('pointerdown', (e) => {
             const contactItem = e.target.closest('.contact-item');
             if (!contactItem) return;
@@ -1264,7 +1264,7 @@ if (btnFechar && sidebar) {
             clearTimeout(pressTimer);
         });
 
-        // Clique direito no PC
+      
         contactsList.addEventListener('contextmenu', (e) => {
             e.preventDefault();
 
@@ -1301,7 +1301,7 @@ if (btnFechar && sidebar) {
         }
 
         /* ============================================
-           AUTENTICAÃ‡ÃƒO
+           AUTENTICÃO
            ============================================ */
         
         function setupAuthListeners() {
@@ -1341,7 +1341,7 @@ if (btnFechar && sidebar) {
             const user = allUsers[username];
 
             if (!user || user.password !== password) {
-                showError('UsuÃ¡rio ou senha incorretos');
+                showError('Usuário ou senha incorretos');
                 return;
             }
 
@@ -1382,12 +1382,12 @@ if (btnFechar && sidebar) {
             }
 
             if (username.length < 10) {
-                showError('UsuÃ¡rio deve ter pelo menos 10 caracteres');
+                showError('Usuário deve ter pelo menos 10 caracteres');
                 return;
             }
 
             if (!email.includes('@gmail.com')) {
-                showError('Use um Gmail vÃ¡lido');
+                showError('Use um Gmail valido');
                 return;
             }
 
@@ -1397,14 +1397,14 @@ if (btnFechar && sidebar) {
             }
 
             if (password !== passwordConfirm) {
-                showError('As senhas nÃ£o conferem');
+                showError('As senhas não conferem');
                 return;
             }
 
             const allUsers = getFromStorage('chatbrasil_users', {});
 
             if (allUsers[username]) {
-                showError('Este usuÃ¡rio jÃ¡ existe');
+                showError('Este usuário já¡ existe');
                 return;
             }
 
@@ -1575,23 +1575,23 @@ if (btnFechar && sidebar) {
             const username = document.getElementById('newContactUsername').value.trim();
 
             if (!username) {
-                alert('Digite o nome de usuÃ¡rio');
+                alert('Digite o nome de usuário');
                 return;
             }
 
             const allUsers = getFromStorage('chatbrasil_users', {});
             if (!allUsers[username]) {
-                alert('UsuÃ¡rio nÃ£o encontrado');
+                alert('Usuário não encontrado');
                 return;
             }
 
             if (username === config.currentUser) {
-                alert('VocÃª nÃ£o pode adicionar a si mesmo');
+                alert('Você não pode adicionar a si mesmo');
                 return;
             }
 
             if (config.contacts.some(c => c.id === username)) {
-                alert('Este contato jÃ¡ existe');
+                alert('Este contato já¡ existe');
                 return;
             }
 
@@ -1657,7 +1657,7 @@ if (btnFechar && sidebar) {
                 container.innerHTML = `
                     <div class="empty-chat">
                         <div class="empty-chat-icon">ðŸ’¬</div>
-                        <div class="empty-chat-text">Selecione uma conversa para comeÃ§ar</div>
+                        <div class="empty-chat-text">Selecione uma conversa para conversar</div>
                     </div>
                 `;
                 return;
@@ -1891,7 +1891,7 @@ if (btnFechar && sidebar) {
         }
 
         /* ============================================
-           PERMISSÃ•ES
+           PERMISSÕES
            ============================================ */
         
         function requestPermissions() {
@@ -1908,7 +1908,7 @@ if (btnFechar && sidebar) {
                         updatePermissionStatus();
                     })
                     .catch(err => {
-                        console.log('CÃ¢mera nÃ£o disponÃ­vel');
+                        console.log('Camera não disponi­vel');
                     });
             }
         }
@@ -1922,7 +1922,7 @@ if (btnFechar && sidebar) {
                         updatePermissionStatus();
                     })
                     .catch(err => {
-                        console.log('Microfone nÃ£o disponÃ­vel');
+                        console.log('Microfone não disponi­vel');
                     });
             }
         }
@@ -1935,7 +1935,7 @@ if (btnFechar && sidebar) {
         }
 
         /* ============================================
-           CONFIGURAÃ‡Ã•ES
+           CONFIGURAÇÕES
            ============================================ */
         
         function updateSettingsModal() {
@@ -1961,25 +1961,25 @@ if (btnFechar && sidebar) {
          function deleteAccount() {
     const currentUsername = config.currentUser;
     
-    // Pega todos os usuÃ¡rios do localStorage
+   
     const allUsers = JSON.parse(localStorage.getItem('chatbrasil_users') || '{}');
     
-    // Deleta o usuÃ¡rio atual
+    
     if (allUsers[currentUsername]) {
         delete allUsers[currentUsername];
         localStorage.setItem('chatbrasil_users', JSON.stringify(allUsers));
     }
     
-    // Limpa todos os dados do usuÃ¡rio
+   
     localStorage.removeItem('chatbrasil_currentUser');
     localStorage.removeItem('chatbrasil_contacts_' + currentUsername);
     localStorage.removeItem('chatbrasil_messages_' + currentUsername);
     localStorage.removeItem('chatbrasil_groups_' + currentUsername);
     
-    // Fecha o modal
+    
     closeModal('confirmDeleteModal');
     
-    // Reseta a configuraÃ§Ã£o
+   
     config.currentUser = null;
     config.currentUserEmail = null;
     config.selectedContact = null;
@@ -1987,13 +1987,13 @@ if (btnFechar && sidebar) {
     config.messages = {};
     config.groups = [];
     
-    // Limpa formulÃ¡rios
+   
     clearAuthForms();
     
-    // Mostra mensagem
+   
     showSuccess('Conta deletada com sucesso!');
     
-    // Volta para login apÃ³s 1 segundo
+    
     setTimeout(() => {
         showAuthScreen();
     }, 1000);
@@ -2016,7 +2016,7 @@ if (btnFechar && sidebar) {
         }
 
         /* ============================================
-           UTILITÃRIOS
+           UTILITARIOS
            ============================================ */
         
         function saveUserData() {
@@ -2043,7 +2043,7 @@ if (btnFechar && sidebar) {
         }
 
              /* ============================================
-           INICIALIZAÃ‡ÃƒO
+           INICIALIZAÇÃO
            ============================================ */
         
         document.addEventListener('DOMContentLoaded', () => {
